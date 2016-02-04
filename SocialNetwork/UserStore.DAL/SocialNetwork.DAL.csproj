@@ -61,6 +61,8 @@
     <Compile Include="Entities\ApplicationRole.cs" />
     <Compile Include="Entities\ApplicationUser.cs" />
     <Compile Include="Entities\ClientProfile.cs" />
+    <Compile Include="Entities\LikesUserPost.cs" />
+    <Compile Include="Entities\Post.cs" />
     <Compile Include="Interfaces\IClientManager.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

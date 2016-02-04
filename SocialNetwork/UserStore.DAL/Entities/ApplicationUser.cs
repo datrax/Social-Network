@@ -4,6 +4,6 @@ namespace UserStore.DAL.Entities
 {
     public class ApplicationUser : IdentityUser
     {
-      //  public virtual ClientProfile ClientProfile { get; set; }
+        public virtual ClientProfile ClientProfile { get; set; }
     }
 }
