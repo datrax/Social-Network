@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialNetwork.WEB", "UserStore.WEB\SocialNetwork.WEB.csproj", "{4ACA242B-6F75-4354-9498-E68BB637B30E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialNetwork.DAL", "UserStore.DAL\SocialNetwork.DAL.csproj", "{C7FC9EB3-7680-4D0D-826C-913867FB8F96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialNetwork.BLL", "UserStore.BLL\SocialNetwork.BLL.csproj", "{E7D185DA-E5DB-4E1B-8958-930429F6D310}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4ACA242B-6F75-4354-9498-E68BB637B30E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4ACA242B-6F75-4354-9498-E68BB637B30E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4ACA242B-6F75-4354-9498-E68BB637B30E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4ACA242B-6F75-4354-9498-E68BB637B30E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7FC9EB3-7680-4D0D-826C-913867FB8F96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7FC9EB3-7680-4D0D-826C-913867FB8F96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7FC9EB3-7680-4D0D-826C-913867FB8F96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7FC9EB3-7680-4D0D-826C-913867FB8F96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7D185DA-E5DB-4E1B-8958-930429F6D310}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7D185DA-E5DB-4E1B-8958-930429F6D310}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7D185DA-E5DB-4E1B-8958-930429F6D310}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7D185DA-E5DB-4E1B-8958-930429F6D310}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
