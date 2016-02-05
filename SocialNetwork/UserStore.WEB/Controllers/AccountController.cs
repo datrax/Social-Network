@@ -85,7 +85,7 @@ namespace UserStore.Controllers
                 {
                     Email = model.Email,
                     Password = model.Password,
-                    Address = model.Address,
+                    Surname = model.Surname,
                     Name = model.Name,
                     Role = "user"
                 };
@@ -106,7 +106,7 @@ namespace UserStore.Controllers
                 UserName = "somemail@mail.ru",
                 Password = "ad46D_ewr3",
                 Name = "Семен Семенович Горбунков",
-                Address = "ул. Спортивная, д.30, кв.75",
+                Surname = "ул. Спортивная, д.30, кв.75",
                 Role = "admin",
             }, new List<string> { "user", "admin" });
         }

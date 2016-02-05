@@ -1,47 +1,78 @@
-﻿@model UserStore.Models.LoginModel
+﻿@using System.Text.RegularExpressions
+@model UserStore.Models.LoginModel
 
 @{
     ViewBag.Title = "Login";
 }
+<link href="~/Content/LoginRegisterStyle.css" rel="stylesheet" />
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-login">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <a href="#" class="active" id="login-form-link">Login</a>
+                        </div>
+                        <div class="col-xs-6">
+                            @Html.ActionLink("Register", "Register", null, new { id = "register-form-link" })
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            @using (Html.BeginForm())
+                            {
+                                @Html.AntiForgeryToken()
+                                //     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                var t = Html.ValidationSummary().ToString();
+                                Regex reg = new Regex("<li>(.*?)</li>");
+                                Match m = reg.Match(t);
+                                var message = m.Groups[1].ToString();
+                                if (!string.IsNullOrEmpty(message))
+                                {
+                                    <script>
+                                        if (!history.next)
+                                            sweetAlert("", "@message", "error");
+                                    </script>
+                                }
+                                <div class="form-group text-center">
+                                    @Html.EditorFor(model => model.Email, new
+                               {
+                                   htmlAttributes = new { tabindex = "1", @class = "form-control", placeholder = "Username", style = "margin:auto" }
+                               })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group text-center">
+                                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { tabindex = "2", @class = "form-control", placeholder = "Password", style = "margin:auto" } })
+                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger " })
+                                </div>
 
-<h2>Login</h2>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-sm-offset-3">
+                                            <input type="submit" value="Login" class="form-control btn btn-login">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-lg-12">
 
-
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>LoginModel</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

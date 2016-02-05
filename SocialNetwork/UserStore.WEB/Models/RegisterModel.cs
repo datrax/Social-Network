@@ -19,7 +19,7 @@ namespace UserStore.Models
         [Compare("Password")]
         public string ConfirmPassword { get; set; }
         [Required]
-        public string Address { get; set; }
+        public string Surname { get; set; }
         [Required]
         public string Name { get; set; }
     }
