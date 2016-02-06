@@ -12,11 +12,15 @@ namespace UserStore
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
             routes.MapRoute(
-     name: "Home",
+     name: "First",
+     url: "",
+     defaults: new { controller = "Home", action = "Index" }
+ );
+            routes.MapRoute(
+     name: "MyRoute",
      url: "{id}",
-     defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+     defaults: new { controller = "Home", action = "UserPage", id = "" }
  );
 
             routes.MapRoute(

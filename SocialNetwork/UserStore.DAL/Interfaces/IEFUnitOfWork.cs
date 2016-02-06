@@ -7,11 +7,11 @@ using UserStore.DAL.Entities;
 
 namespace UserStore.DAL.Interfaces
 {
-    interface IEFUnitOfWork
+    public interface IEFUnitOfWork
     {
         IRepository<ClientProfile> Users { get; }
         IRepository<Post> Posts { get; }
-        IRepository<LikesUserPost> PostLikes { get; }
+  //      IRepository<LikesUserPost> PostLikes { get; }
         void Save();
     }
 }

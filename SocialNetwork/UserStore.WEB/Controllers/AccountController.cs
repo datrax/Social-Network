@@ -87,11 +87,29 @@ namespace UserStore.Controllers
                     Password = model.Password,
                     Surname = model.Surname,
                     Name = model.Name,
+                    Login=model.Login,
                     Role = "user",
                 };
                 OperationDetails operationDetails = await UserService.Create(userDto);
                 if (operationDetails.Succedeed)
-                    return View("SuccessRegister");
+                {
+                    ClaimsIdentity claim = await UserService.Authenticate(userDto);
+
+                    if (claim == null)
+                    {
+                        ModelState.AddModelError("", "Wrong login or password.");
+                    }
+                    else
+                    {
+                        AuthenticationManager.SignOut();
+                        AuthenticationManager.SignIn(new AuthenticationProperties
+                        {
+                            IsPersistent = true
+                        }, claim);
+                        return Redirect("/" + userDto.Login);
+                    }
+                    //  return View("SuccessRegister");
+                }
                 else
                     ModelState.AddModelError(operationDetails.Property, operationDetails.Message);
             }

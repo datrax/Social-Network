@@ -9,17 +9,17 @@ using UserStore.DAL.Interfaces;
 
 namespace UserStore.DAL.Repositories
 {
-    class EFUnitOfWork
+    public class EFUnitOfWork:IEFUnitOfWork
     {
         private ApplicationContext db;
         private UserRepository userRepository;
         private PostRepository postRepository;
 
-        public EFUnitOfWork(string connectionString)
+        public EFUnitOfWork()
         {
-            db = new ApplicationContext(connectionString);
+            db = new ApplicationContext();
         }
-        public IRepository<Post> Phones
+        public IRepository<Post> Posts
         {
             get
             {

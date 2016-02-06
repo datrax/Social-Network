@@ -19,10 +19,12 @@ namespace UserStore.BLL.Services
         public UserService(IUnitOfWork uow)
         {
             Database = uow;
+
         }
 
         public async Task<OperationDetails> Create(UserDTO userDto)
         {
+
             ApplicationUser user = await Database.UserManager.FindByEmailAsync(userDto.Email);
             if (user == null)
             {                 
@@ -31,7 +33,7 @@ namespace UserStore.BLL.Services
                 // добавляем роль
                 await Database.UserManager.AddToRoleAsync(user.Id, userDto.Role);
                 // создаем профиль клиента
-                ClientProfile clientProfile = new ClientProfile { Id = user.Id, Surname = userDto.Surname, Name = userDto.Name };
+                ClientProfile clientProfile = new ClientProfile { Id = user.Id, Surname = userDto.Surname, Name = userDto.Name ,Login=userDto.Login};
                 Database.ClientManager.Create(clientProfile);
                 await Database.SaveAsync();
                 return new OperationDetails(true, "Регистрация успешно пройдена", "");
