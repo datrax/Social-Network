@@ -42,7 +42,7 @@ namespace UserStore.Controllers
             await SetInitialDataAsync();
 
             if (ModelState.IsValid)
-            {
+            {               
                 UserDTO userDto = new UserDTO { Email = model.Email, Password = model.Password};
                 ClaimsIdentity claim = await UserService.Authenticate(userDto);
                 if (claim == null)
@@ -87,7 +87,7 @@ namespace UserStore.Controllers
                     Password = model.Password,
                     Surname = model.Surname,
                     Name = model.Name,
-                    Role = "user"
+                    Role = "user",
                 };
                 OperationDetails operationDetails = await UserService.Create(userDto);
                 if (operationDetails.Succedeed)

@@ -24,6 +24,8 @@ namespace UserStore.DAL.Entities
 
         public string UserToId { get; set; }
 
+        public DateTime DateTime { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LikesUserPost> LikesUserPost { get; set; }
 

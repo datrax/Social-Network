@@ -7,6 +7,8 @@ using System.Security.Claims;
 using UserStore.BLL.Interfaces;
 using UserStore.DAL.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
+using UserStore.DAL.EF;
 
 namespace UserStore.BLL.Services
 {
@@ -23,7 +25,7 @@ namespace UserStore.BLL.Services
         {
             ApplicationUser user = await Database.UserManager.FindByEmailAsync(userDto.Email);
             if (user == null)
-            {
+            {                 
                 user = new ApplicationUser { Email = userDto.Email, UserName = userDto.Email };
                 await Database.UserManager.CreateAsync(user, userDto.Password);
                 // добавляем роль
