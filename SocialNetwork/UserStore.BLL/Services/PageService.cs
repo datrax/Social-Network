@@ -17,13 +17,22 @@ namespace UserStore.BLL.Services
         IEFUnitOfWork Database { get; set; }
         public PageService()
         {     
-            Database =new EFUnitOfWork("data source = WIN - H9FLMNV32VF\\SQLEXPRESS; initial catalog = SimpleSocialNetwork4; integrated security = True; MultipleActiveResultSets = True; App = EntityFramework");
+            Database =new EFUnitOfWork();
         }
-        public UserDTO GetUserByID(string login)
+        public UserDTO GetUserByID(string id)
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<ClientProfile, UserDTO>());
             var mapper = config.CreateMapper();
-            return mapper.Map<UserDTO>(Database.Users.Find(a => a.Id == login).First());
+            return mapper.Map<UserDTO>(Database.Users.Find(a => a.Id == id).First());
+        }
+        public UserDTO GetUserByLogin(string login)
+        {
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<ClientProfile, UserDTO>());
+            var mapper = config.CreateMapper();
+            var t = Database.Users.Find(a => a.Login == login).ToList();
+            if (t.Count==0)
+                return null;
+            return mapper.Map<UserDTO>(Database.Users.Find(a => a.Login == login).First());
         }
     }
 }

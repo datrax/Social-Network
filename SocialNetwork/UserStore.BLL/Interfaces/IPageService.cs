@@ -9,7 +9,7 @@ namespace UserStore.BLL.Interfaces
 {
     public interface IPageService
     {
-        UserDTO GetUserByID(string login);
-
+        UserDTO GetUserByID(string id);
+        UserDTO GetUserByLogin(string login);
     }
 }

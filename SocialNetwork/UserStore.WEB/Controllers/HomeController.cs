@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using AutoMapper;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity;
+using UserStore.BLL.DTO;
 using UserStore.BLL.Interfaces;
 using UserStore.BLL.Services;
+using UserStore.Models;
 
 namespace UserStore.Controllers
 {
@@ -37,9 +41,13 @@ namespace UserStore.Controllers
         }
         [Authorize]
         public ActionResult UserPage(string id)
-        {
-            ViewBag.Text = id;
-            return View();
+        {            
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<UserDTO, UserModel > ());
+            var mapper = config.CreateMapper();            
+            var t = pageService.GetUserByLogin(id);
+            if (t == null)
+                return View("Error");           
+            return View(mapper.Map<UserModel>(t));
         }
         [Authorize(Roles="admin")]
         public ActionResult About()

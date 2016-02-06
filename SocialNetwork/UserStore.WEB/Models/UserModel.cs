@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UserStore.Models
 {
-    class UserModel
+    public class UserModel
     {
         public string Name { get; set; }
         public string Surname { get; set; }
