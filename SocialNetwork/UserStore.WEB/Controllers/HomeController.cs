@@ -95,7 +95,12 @@ namespace UserStore.Controllers
                     pageService.SetAvatar(headerImage);
                 }
             }
-            return RedirectToAction("Error");
+            // return RedirectToAction("Error");
+            return Redirect("/" + id);
+        }
+        public ActionResult EditModel(UserModel model)
+        {
+            return PartialView(model);
         }
     }
 }

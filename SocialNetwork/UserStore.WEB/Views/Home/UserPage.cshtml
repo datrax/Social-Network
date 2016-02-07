@@ -15,14 +15,23 @@
         </div>
     </div>
 </div> <!-- /container -->
-@using (Html.BeginForm("UploadImages", "Home", new {id=@Model.Login},FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    <div class="row">
-        <span class="span4">
-            <input type="file" name="uploadImages" multiple="multiple" class="input-files" />
-        </span>
-        <span class="span2">
-            <input type="submit" name="button" value="Upload" class="btn btn-upload" />
-        </span>
-    </div>
-}
+
+<script src="~/Scripts/jquery-ui-1.11.4.js"></script>
+<link href="~/Content/themes/base/theme.css" rel="stylesheet" />
+
+<script type="text/javascript">
+    $(function() {
+        $('.modal1').click(function() {
+            $('<div/>').appendTo('body').dialog({
+                close: function(event, ui) {
+                    dialog.remove();
+                },
+                modal: true
+            }).load(this.href, {});
+
+            return false;
+        });
+    });
+</script>
+@Html.ActionLink("show modal", "EditModel" ,@Model, new { @class = "modal1" })
+

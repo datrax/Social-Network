@@ -1,0 +1,15 @@
+﻿@model UserStore.Models.UserModel
+
+
+
+@using (Html.BeginForm("UploadImages", "Home", new { id = @Model.Login }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="row">
+        <span class="span4">
+            <input type="file" name="uploadImages" multiple="multiple" class="input-files" />
+        </span>
+        <span class="span2">
+            <input type="submit" name="button" value="Upload" class="btn btn-upload" />
+        </span>
+    </div>
+}

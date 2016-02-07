@@ -7,7 +7,8 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <script src="~/Scripts/sweetalert.min.js"></script>
-    <link href="~/Content/sweetalert.css" rel="stylesheet" />
+    <link href="~/Content/sweetalert.css" rel="stylesheet"/>
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top" style="visibility: hidden">
@@ -53,8 +54,7 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+
     @RenderSection("scripts", required: false)
 </body>
 </html>
