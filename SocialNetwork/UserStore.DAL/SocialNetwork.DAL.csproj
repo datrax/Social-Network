@@ -60,6 +60,7 @@
     <Compile Include="EF\ApplicationContext.cs" />
     <Compile Include="Entities\ApplicationRole.cs" />
     <Compile Include="Entities\ApplicationUser.cs" />
+    <Compile Include="Entities\Photo.cs" />
     <Compile Include="Entities\ClientProfile.cs" />
     <Compile Include="Entities\LikesUserPost.cs" />
     <Compile Include="Entities\Post.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Repositories\ClientManager.cs" />
     <Compile Include="Repositories\EFUnitOfWork.cs" />
     <Compile Include="Repositories\IdentityUnitOfWork.cs" />
+    <Compile Include="Repositories\PhotoRepository.cs" />
     <Compile Include="Repositories\PostRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
   </ItemGroup>

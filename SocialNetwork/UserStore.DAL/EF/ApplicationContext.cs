@@ -15,6 +15,7 @@ namespace UserStore.DAL.EF
         public DbSet<ClientProfile> ClientProfiles { get; set; }
         public virtual DbSet<Post> Post { get; set; }
         public virtual DbSet<LikesUserPost> LikesUserPost { get; set; }
+        public DbSet<Photo> Avatars { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

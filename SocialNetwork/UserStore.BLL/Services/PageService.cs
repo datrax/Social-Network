@@ -34,5 +34,40 @@ namespace UserStore.BLL.Services
                 return null;
             return mapper.Map<UserDTO>(Database.Users.Find(a => a.Login == login).First());
         }
+
+        public AvatarDTO GetAvatar(string login)
+        {
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Photo, AvatarDTO>());
+            var mapper = config.CreateMapper();
+            var t = Database.Avatars.Find(a => a.Login == login).ToList();
+            if (t.Count == 0)
+                return null;
+            return mapper.Map<AvatarDTO>(Database.Avatars.Find(a => a.Login == login).First());
+
+        }
+
+        public bool SetAvatar(AvatarDTO avatar)
+        {
+            try
+            {
+                var t = Database.Avatars.Find(a => a.Login == avatar.Login).ToList();
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<AvatarDTO, Photo>());
+                var mapper = config.CreateMapper();
+                if (t.Count == 0)
+                {
+                    Database.Avatars.Create(mapper.Map<Photo>(avatar));
+                }
+                else
+                {
+                    Database.Avatars.Update(mapper.Map<Photo>(avatar));
+                }
+                Database.Save();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

@@ -11,6 +11,7 @@ namespace UserStore.DAL.Interfaces
     {
         IRepository<ClientProfile> Users { get; }
         IRepository<Post> Posts { get; }
+        IRepository<Photo> Avatars { get; } 
   //      IRepository<LikesUserPost> PostLikes { get; }
         void Save();
     }

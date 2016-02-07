@@ -14,6 +14,7 @@ namespace UserStore.DAL.Repositories
         private ApplicationContext db;
         private UserRepository userRepository;
         private PostRepository postRepository;
+        private PhotoRepository photoRepository;
 
         public EFUnitOfWork()
         {
@@ -36,6 +37,15 @@ namespace UserStore.DAL.Repositories
                 if (userRepository == null)
                     userRepository = new UserRepository(db);
                 return userRepository;
+            }
+        }
+        public IRepository<Photo> Avatars
+        {
+            get
+            {
+                if (photoRepository == null)
+                    photoRepository = new PhotoRepository(db);
+                return photoRepository;
             }
         }
 

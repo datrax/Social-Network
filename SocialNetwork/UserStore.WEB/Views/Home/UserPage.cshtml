@@ -8,12 +8,21 @@
 <div class="container">
     <div class="fb-profile">
         <img align="left" class="fb-image-lg" src="http://lorempixel.com/850/280/nightlife/5/" alt="Profile image example" />
-        <img align="left" class="fb-image-profile thumbnail" src="http://lorempixel.com/180/180/people/9/" alt="Profile image example" />
+        <img align="left" class="fb-image-profile thumbnail" src="Home/ViewImage/@Model.Login" alt="Profile image example" />
         <div class="fb-profile-text">
             <h1>@Model.Name @Model.Surname</h1>
             <p>Girls just wanna go fun.</p>
         </div>
     </div>
 </div> <!-- /container -->
-<h2>@User.Identity.Name</h2>
-@ViewBag.Text
+@using (Html.BeginForm("UploadImages", "Home", new {id=@Model.Login},FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="row">
+        <span class="span4">
+            <input type="file" name="uploadImages" multiple="multiple" class="input-files" />
+        </span>
+        <span class="span2">
+            <input type="submit" name="button" value="Upload" class="btn btn-upload" />
+        </span>
+    </div>
+}

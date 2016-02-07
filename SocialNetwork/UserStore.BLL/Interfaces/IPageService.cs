@@ -11,5 +11,7 @@ namespace UserStore.BLL.Interfaces
     {
         UserDTO GetUserByID(string id);
         UserDTO GetUserByLogin(string login);
+        AvatarDTO GetAvatar(string login);
+        bool SetAvatar(AvatarDTO avatar);
     }
 }
