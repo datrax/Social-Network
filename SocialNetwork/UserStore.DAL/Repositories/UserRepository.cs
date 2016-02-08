@@ -38,7 +38,7 @@ namespace UserStore.DAL.Repositories
         {
             //db.Entry(profile).State = EntityState.Modified;
             var t = db.ClientProfiles.Where(a => a.Id == profile.Id).First();
-           // t.Login = profile.Login;
+            t.Login = profile.Login;
             t.Name = profile.Name;
             t.Surname = profile.Surname;
         }

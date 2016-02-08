@@ -73,8 +73,13 @@ namespace UserStore.Controllers
         [HttpPost]
         public ActionResult UploadImages(HttpPostedFileBase uploadImage,UserModel model)
         {
-         
-                if (uploadImage!=null)
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<UserModel, UserDTO>());
+            var mapper = config.CreateMapper();
+            var t = mapper.Map<UserDTO>(model);
+            t.Id = User.Identity.GetUserId();
+            pageService.ChangeUserInfo(t);
+
+            if (uploadImage!=null)
                 {
                     byte[] imageData = null;
                     using (var binaryReader = new BinaryReader(uploadImage.InputStream))
@@ -84,15 +89,11 @@ namespace UserStore.Controllers
                     var headerImage = new AvatarDTO()
                     {
                         Avatar = imageData,
-                        Login = model.Login   
+                        Login = model.Id   
                     };
                     pageService.SetAvatar(headerImage);
                 }
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<UserModel, UserDTO>());
-            var mapper = config.CreateMapper();
-            var t=mapper.Map<UserDTO>(model);
-            t.Id = User.Identity.GetUserId();
-            pageService.ChangeUserInfo(t);
+
             // return RedirectToAction("Error");
             return Redirect("/" + model.Login);
         }
