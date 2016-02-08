@@ -10,7 +10,7 @@ namespace UserStore.DAL.Entities
     public class Photo
     {
         [Key]
-        public string Login { get; set; }
+        public string UserId { get; set; }
         public byte[] Avatar { get; set; }
 
     }

@@ -60,8 +60,8 @@ namespace UserStore.Controllers
 
             return View();
         }
-        [HttpGet]
-        [Authorize]
+
+
         public ActionResult ViewImage(string id)
         {
             var item = pageService.GetAvatar(id);
@@ -70,34 +70,50 @@ namespace UserStore.Controllers
             byte[] buffer = item.Avatar;
             return File(buffer, "image/jpg", string.Format("{0}.jpg", id));
         }
-        [HttpPost]
-        public ActionResult UploadImages(HttpPostedFileBase uploadImage,UserModel model)
+
+        public string GetImageName(string id)
         {
+            var item = pageService.GetAvatar(id);
+            if (item == null)
+                return "/Content/user-default.png";
+            return "/Home/ViewImage/" + id;
+        }
+        [HttpPost]
+        public ActionResult UploadImages(HttpPostedFileBase uploadImage, UserModel model)
+        {
+            if (string.IsNullOrEmpty(model.Name ) )
+                return Json(new { result = false, responseText = "Please enter name" });
+
+            if (string.IsNullOrEmpty(model.Surname))
+                return Json(new { result = false, responseText = "Please enter surname" });
+            if(pageService.GetUserByLogin(model.Login)!=null&& pageService.GetUserByLogin(model.Login).Id!=model.Id)
+                return Json(new { result = false, responseText = "This URL is busy" });
+
             var config = new MapperConfiguration(cfg => cfg.CreateMap<UserModel, UserDTO>());
             var mapper = config.CreateMapper();
             var t = mapper.Map<UserDTO>(model);
             t.Id = User.Identity.GetUserId();
             pageService.ChangeUserInfo(t);
 
-            if (uploadImage!=null)
+            if (uploadImage != null)
+            {
+                byte[] imageData = null;
+                using (var binaryReader = new BinaryReader(uploadImage.InputStream))
                 {
-                    byte[] imageData = null;
-                    using (var binaryReader = new BinaryReader(uploadImage.InputStream))
-                    {
-                        imageData = binaryReader.ReadBytes(uploadImage.ContentLength);
-                    }
-                    var headerImage = new AvatarDTO()
-                    {
-                        Avatar = imageData,
-                        Login = model.Id   
-                    };
-                    pageService.SetAvatar(headerImage);
+                    imageData = binaryReader.ReadBytes(uploadImage.ContentLength);
                 }
+                var headerImage = new AvatarDTO()
+                {
+                    Avatar = imageData,
+                    UserId = model.Id
+                };
+                pageService.SetAvatar(headerImage);
+            }
 
             // return RedirectToAction("Error");
-            return Redirect("/" + model.Login);
+            return Json(new { result = "Redirect", url = "/" + model.Login});
         }
- 
+
         public ActionResult EditModel()
         {
             string id = User.Identity.GetUserId();
@@ -106,5 +122,18 @@ namespace UserStore.Controllers
             var mapper = config.CreateMapper();
             return PartialView(mapper.Map<UserModel>(t));
         }
+
+        public ActionResult Search(string searchName, string searchSurname)
+        {
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<UserDTO, UserModel>());
+            var mapper = config.CreateMapper();
+            return PartialView("SearchUsers", mapper.Map<IEnumerable<UserModel>>(pageService.FindUsers(searchName, searchSurname)));
+        }
+
+        public ActionResult SearchUsers()
+        {
+            return new EmptyResult();
+        }
+ 
     }
 }

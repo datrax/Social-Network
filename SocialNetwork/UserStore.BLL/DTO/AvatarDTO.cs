@@ -8,7 +8,7 @@ namespace UserStore.BLL.DTO
 {
     public class AvatarDTO
     {
-        public string Login { get; set; }
+        public string UserId { get; set; }
         public byte[] Avatar { get; set; }
     }
 }

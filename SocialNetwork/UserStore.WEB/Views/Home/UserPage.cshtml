@@ -3,16 +3,33 @@
 @{
     ViewBag.Title = "User Page";
 }
-<link href="~/Content/UserPageStyle.css" rel="stylesheet" />
+<link href="~/Content/UserPageStyle.css" rel="stylesheet"/>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 <div class="container">
     <div class="fb-profile">
         <img align="left" class="fb-image-lg" src="http://lorempixel.com/850/280/nightlife/5/" alt="Profile image example" />
-        <img align="left" class="fb-image-profile thumbnail" src="Home/ViewImage/@Model.Id" alt="Profile image example" />
+        <img align="left" class="fb-image-profile thumbnail" src="/Home/ViewImage/@Model.Id" onerror="this.src='/Content/user-default.png'" />
         <div class="fb-profile-text">
             <h1>@Model.Name @Model.Surname</h1>
             <p>Girls just wanna go fun.</p>
+            @Html.ActionLink("show modal", "EditModel", null, new { @class = "modal1" })
+            @Ajax.ActionLink("show modal2", "EditModel", null, new { @class = "modal1" }, new AjaxOptions { UpdateTargetId = "results3" })
+            <div id="results3" class="col-sm-6 col-sm-offset-2" style=" z-index: 500; position: absolute"></div>
+            <div>
+                @using (Ajax.BeginForm("Search", "Home", new AjaxOptions { UpdateTargetId = "results" }))
+                {
+                    <div>
+                        <input type="text" name="searchName" value="" class="textbox">
+                        <input type="text" name="searchSurname" value="" class="textbox">
+                        <input type="submit" value="Search" id="SubmitBtn" style="visibility: hidden">
+                        </div>
+                        }
+                    </div>
+            <div id="results"  class="col-sm-6 col-sm-offset-2" style=" z-index: 1000; position: absolute"></div>
+
         </div>
+
     </div>
 </div> <!-- /container -->
 
@@ -22,10 +39,10 @@
 <script type="text/javascript">
     $(function() {
         $('.modal1').click(function() {
-            $('<div/>').appendTo('body').dialog({ 
+            $('<div/>').appendTo('body').dialog({
                 width: 500,
                 maxWidth: 500,
-                resizable:false,
+                resizable: true,
                 close: function(event, ui) {
                     dialog.remove();
                 },
@@ -36,5 +53,12 @@
         });
     });
 </script>
-@Html.ActionLink("show modal", "EditModel" ,null, new { @class = "modal1" })
+<script type="text/javascript">
+    $(function () {
+        $(".textbox").bind('input', function() {
+            $("#SubmitBtn").submit();
+        });
+    });
+</script>
+
 

@@ -38,7 +38,7 @@ namespace UserStore.DAL.Repositories
         public void Update(Photo photo)
         {
             //db.Entry(photo).State = EntityState.Modified;
-            var t=db.Avatars.Where(a => a.Login == photo.Login).First();
+            var t=db.Avatars.Where(a => a.UserId == photo.UserId).First();
             t.Avatar = photo.Avatar;
         }
 

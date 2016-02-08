@@ -14,5 +14,6 @@ namespace UserStore.BLL.Interfaces
         AvatarDTO GetAvatar(string login);
         bool SetAvatar(AvatarDTO avatar);
         bool ChangeUserInfo(UserDTO user);
+        IEnumerable<UserDTO> FindUsers(string name, string surname);
     }
 }

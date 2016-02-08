@@ -11,7 +11,7 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-6">
-                            @Html.ActionLink("Login", "Login", null, new { id = "id-form-link" })
+                            @Html.ActionLink("UserId", "Login", null, new { id = "id-form-link" })
                         </div>
                         <div class="col-xs-6">
                             <a href="#" class="active" id="register-form-link">Register</a>
@@ -46,7 +46,7 @@
                                     @Html.ValidationMessageFor(model => model.Email, "", new {@class = "text-danger"})
                                 </div>
                                 <div class="form-group text-center">
-                                    @Html.EditorFor(model => model.Login, new { htmlAttributes = new { @class = "form-control", tabindex = "1", placeholder = "Login", style = "margin:auto" } })
+                                    @Html.EditorFor(model => model.Login, new { htmlAttributes = new { @class = "form-control", tabindex = "1", placeholder = "UserId", style = "margin:auto" } })
                                     @Html.ValidationMessageFor(model => model.Login, "", new { @class = "text-danger" })
                                 </div>
                                 <div class="form-group text-center">
