@@ -36,7 +36,11 @@ namespace UserStore.DAL.Repositories
 
         public void Update(ClientProfile profile)
         {
-            db.Entry(profile).State = EntityState.Modified;
+            //db.Entry(profile).State = EntityState.Modified;
+            var t = db.ClientProfiles.Where(a => a.Id == profile.Id).First();
+           // t.Login = profile.Login;
+            t.Name = profile.Name;
+            t.Surname = profile.Surname;
         }
 
         public IEnumerable<ClientProfile> Find(Func<ClientProfile, Boolean> predicate)

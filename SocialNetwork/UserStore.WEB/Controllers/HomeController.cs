@@ -71,36 +71,39 @@ namespace UserStore.Controllers
             return File(buffer, "image/jpg", string.Format("{0}.jpg", id));
         }
         [HttpPost]
-        public ActionResult UploadImages(HttpPostedFileBase[] uploadImages, string id)
+        public ActionResult UploadImages(HttpPostedFileBase uploadImage,UserModel model)
         {
-            if (uploadImages.Count() != 1)
-            {
-                return RedirectToAction("Error");
-            }
-
-            foreach (var image in uploadImages)
-            {
-                if (image.ContentLength > 0)
+         
+                if (uploadImage!=null)
                 {
                     byte[] imageData = null;
-                    using (var binaryReader = new BinaryReader(image.InputStream))
+                    using (var binaryReader = new BinaryReader(uploadImage.InputStream))
                     {
-                        imageData = binaryReader.ReadBytes(image.ContentLength);
+                        imageData = binaryReader.ReadBytes(uploadImage.ContentLength);
                     }
                     var headerImage = new AvatarDTO()
                     {
                         Avatar = imageData,
-                        Login = id   
+                        Login = model.Login   
                     };
                     pageService.SetAvatar(headerImage);
                 }
-            }
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<UserModel, UserDTO>());
+            var mapper = config.CreateMapper();
+            var t=mapper.Map<UserDTO>(model);
+            t.Id = User.Identity.GetUserId();
+            pageService.ChangeUserInfo(t);
             // return RedirectToAction("Error");
-            return Redirect("/" + id);
+            return Redirect("/" + model.Login);
         }
-        public ActionResult EditModel(UserModel model)
+ 
+        public ActionResult EditModel()
         {
-            return PartialView(model);
+            string id = User.Identity.GetUserId();
+            var t = pageService.GetUserByID(id);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<UserDTO, UserModel>());
+            var mapper = config.CreateMapper();
+            return PartialView(mapper.Map<UserModel>(t));
         }
     }
 }

@@ -22,7 +22,10 @@
 <script type="text/javascript">
     $(function() {
         $('.modal1').click(function() {
-            $('<div/>').appendTo('body').dialog({
+            $('<div/>').appendTo('body').dialog({ 
+                width: 500,
+                maxWidth: 500,
+                resizable:false,
                 close: function(event, ui) {
                     dialog.remove();
                 },
@@ -33,5 +36,5 @@
         });
     });
 </script>
-@Html.ActionLink("show modal", "EditModel" ,@Model, new { @class = "modal1" })
+@Html.ActionLink("show modal", "EditModel" ,null, new { @class = "modal1" })
 

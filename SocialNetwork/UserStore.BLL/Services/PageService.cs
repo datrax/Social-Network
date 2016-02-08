@@ -69,5 +69,14 @@ namespace UserStore.BLL.Services
                 return false;
             }
         }
+
+        public bool ChangeUserInfo(UserDTO user)
+        {
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<UserDTO, ClientProfile>());
+            var mapper = config.CreateMapper();
+            Database.Users.Update(mapper.Map<ClientProfile>(user));
+            Database.Save();
+            return true;
+        }
     }
 }
