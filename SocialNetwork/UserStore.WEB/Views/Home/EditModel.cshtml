@@ -1,9 +1,7 @@
 ﻿@model UserStore.Models.UserModel
-<div style="background-color: lightgrey;">
-    <div class="text-center">
-        <h2>Edit</h2>
-    </div>
+<div style="background-color: rgba(0, 120, 201, 0.1);">
 
+    <div lass="col-md-12"><br><br></div>
     <form id="myForm" enctype="multipart/form-data" class="form-horizontal">
         <fieldset>
 
@@ -89,7 +87,6 @@
 
                     <label class="col-md-4 control-label">Avatar</label>
                     <div class="col-md-8">
-                        &nbsp; &nbsp; &nbsp;
                         <input type="file" id="base-input" class="form-control form-input form-style-base" name="uploadImage">
                         <input type="text" id="fake-input" class="form-control form-input form-style-fake" placeholder="Choose photo" readonly>
                         <span class="glyphicon glyphicon-open input-place"></span>
@@ -98,8 +95,8 @@
             </div>
             <!-- Button (Double) -->
             <div class="form-group">
-                <div class="col-sm-6 col-sm-offset-3">
-                    <input onclick="addUserInfo()" button id="btnSave" name="btnSave" class="btn btn-success center-block" value="Save" />
+                <div class="col-sm-6 col-sm-offset-5">
+                    <input onclick="addUserInfo()" type="button" id="btnSave" name="btnSave" class="btn btn-primary btn-sm center-block" value="Save" />
                 </div>
             </div>
             @Html.HiddenFor(a => a.Id)

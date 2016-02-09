@@ -123,11 +123,11 @@ namespace UserStore.Controllers
             return PartialView(mapper.Map<UserModel>(t));
         }
 
-        public ActionResult Search(string searchName, string searchSurname)
+        public ActionResult Search(string searchField)
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<UserDTO, UserModel>());
             var mapper = config.CreateMapper();
-            return PartialView("SearchUsers", mapper.Map<IEnumerable<UserModel>>(pageService.FindUsers(searchName, searchSurname)));
+            return PartialView("SearchUsers", mapper.Map<IEnumerable<UserModel>>(pageService.FindUsers(searchField)));
         }
 
         public ActionResult SearchUsers()

@@ -65,7 +65,7 @@ namespace UserStore.Controllers
         public ActionResult Logout()
         {
             AuthenticationManager.SignOut();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Logout", "Account");
         }
 
         public ActionResult Register()

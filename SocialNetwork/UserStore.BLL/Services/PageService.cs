@@ -82,8 +82,19 @@ namespace UserStore.BLL.Services
             return true;
         }
 
-        public IEnumerable<UserDTO> FindUsers(string name, string surname)
+        public IEnumerable<UserDTO> FindUsers(string input)
         {
+            var t = input.IndexOf(" ");
+            string name="", surname="";
+            if (t > 0)
+            {
+                 name = input.Substring(0, t);
+                 surname = input.Substring(t);
+            }
+            else
+            {
+                name = input;
+            }
             if (string.IsNullOrEmpty(name) && string.IsNullOrEmpty(surname))
                 return new List<UserDTO>();
             var config = new MapperConfiguration(cfg => cfg.CreateMap<ClientProfile, UserDTO>());
@@ -107,7 +118,7 @@ namespace UserStore.BLL.Services
                         Database.Users.Find(
                             a =>
                                 a.Name.ToLower().Contains(name.ToLower()) &&
-                                surname.ToLower().Contains(surname.ToLower())).ToList());
+                                a.Surname.ToLower().Contains(surname.ToLower())).ToList());
             }
         }
     }

@@ -34,3 +34,67 @@ body
     width: 20%; 
 }
 }
+ .ui-dialog-titlebar-close {
+        position: absolute;
+        right: .3em;
+        left: 90%;
+        top: 10px;
+        height: 40px;
+        width: 40px;
+    }
+
+    .ui-dialog-title {
+        float: left;
+        margin: .1em 16px .1em 0;
+        text-align: center;
+        width: 100%;
+        font-size: 30px;
+    }
+    .ui-dialog {
+     background-color: rgba(255,255,255,0.1);
+}
+
+    #search {
+
+    margin-top: 9px;
+    width: 250px;
+}
+
+.search {
+    padding: 5px 0;
+    width: 330px;
+    height: 40px;
+    position: relative;
+    left: 10px;
+    float: left;
+    line-height: 22px;
+}
+
+    .search input {
+        position: absolute;
+        width: 0px;
+        float: Left;
+        margin-left: 310px;
+        -webkit-transition: all 0.7s ease-in-out;
+        -moz-transition: all 0.7s ease-in-out;
+        -o-transition: all 0.7s ease-in-out;
+        transition: all 0.7s ease-in-out;
+        height: 40px;
+        line-height: 18px;
+        padding: 0 2px 0 2px;
+        border-radius:1px;
+    }
+
+        .search:hover input, .search input:focus {
+            width: 290px;
+            margin-left: 0px;
+        }
+
+.btn3 {
+    height: 40px;
+    position: absolute;
+    font-size: 24px;
+    right: 0;
+    top: 5px;
+    border-radius:1px;
+}

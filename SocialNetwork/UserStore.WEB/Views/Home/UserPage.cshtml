@@ -3,49 +3,67 @@
 @{
     ViewBag.Title = "User Page";
 }
-<link href="~/Content/UserPageStyle.css" rel="stylesheet"/>
+<script src="~/Scripts/jquery-ui-1.11.4.js"></script>
+<link href="~/Content/themes/base/theme.css" rel="stylesheet" />
+<link href="~/Content/UserPageStyle.css" rel="stylesheet" />
 <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 <div class="container">
     <div class="fb-profile">
-        <img align="left" class="fb-image-lg" src="http://lorempixel.com/850/280/nightlife/5/" alt="Profile image example" />
-        <img align="left" class="fb-image-profile thumbnail" src="/Home/ViewImage/@Model.Id" onerror="this.src='/Content/user-default.png'" />
-        <div class="fb-profile-text">
-            <h1>@Model.Name @Model.Surname</h1>
-            <p>Girls just wanna go fun.</p>
-            @Html.ActionLink("show modal", "EditModel", null, new { @class = "modal1" })
-            @Ajax.ActionLink("show modal2", "EditModel", null, new { @class = "modal1" }, new AjaxOptions { UpdateTargetId = "results3" })
-            <div id="results3" class="col-sm-6 col-sm-offset-2" style=" z-index: 500; position: absolute"></div>
-            <div>
-                @using (Ajax.BeginForm("Search", "Home", new AjaxOptions { UpdateTargetId = "results" }))
-                {
-                    <div>
-                        <input type="text" name="searchName" value="" class="textbox">
-                        <input type="text" name="searchSurname" value="" class="textbox">
-                        <input type="submit" value="Search" id="SubmitBtn" style="visibility: hidden">
-                        </div>
-                        }
-                    </div>
-            <div id="results"  class="col-sm-6 col-sm-offset-2" style=" z-index: 1000; position: absolute"></div>
+        <div class="row">
+            <img align="left" class="fb-image-lg" src="http://lorempixel.com/850/280/nightlife/5/" alt="Profile image example" />
+            <div class="col-md-8">
+                <div>
+                    <img align="left" class="fb-image-profile thumbnail" src="/Home/ViewImage/@Model.Id" onerror="this.src = '/Content/user-default.png'" />
+                </div>
+                <div style="margin-top: -10px;float: left">
+                    <h1>@Model.Name @Model.Surname</h1>
+                    @Html.ActionLink("Edit profile", "EditModel", null, new { @class = "modal1" })<br>
+                    @Html.ActionLink("Выход", "Login", "Account", null, new { style = " float: Left;" })
+                </div>
+            </div>
 
+
+
+                <div class="search" style="float: right">
+                    @using (Ajax.BeginForm("Search", "Home", new AjaxOptions { UpdateTargetId = "results" }))
+            {
+                        <input type="text" class="form-control input-sm" maxlength="64" placeholder="Search" name="searchField" id="searchField" />
+                        <button type="submit" class="btn btn3 btn-primary btn-sm" id="SubmitBtn">Search</button>
+
+                    }
+                    <div id="results"  style=" z-index: 1000; position: absolute;margin-top:20px"></div>
+                </div>
+      
         </div>
 
     </div>
-</div> <!-- /container -->
 
-<script src="~/Scripts/jquery-ui-1.11.4.js"></script>
-<link href="~/Content/themes/base/theme.css" rel="stylesheet" />
+</div>
+
+<div class="row">
+
+
+
+
+</div> <!-- /container -->
+<!--<link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel='stylesheet'/>-->
 
 <script type="text/javascript">
-    $(function() {
-        $('.modal1').click(function() {
+    $(function () {
+        $('.modal1').click(function () {
             $('<div/>').appendTo('body').dialog({
+                position: { my: "center", at: "top+180", of: window },
+                title: "Edit",
                 width: 500,
                 maxWidth: 500,
-                resizable: true,
-                close: function(event, ui) {
+                resizable: false,
+                closeText: "X",
+                close: function (event, ui) {
                     dialog.remove();
+
                 },
+
                 modal: true
             }).load(this.href, {});
 
@@ -55,7 +73,7 @@
 </script>
 <script type="text/javascript">
     $(function () {
-        $(".textbox").bind('input', function() {
+        $("#searchField").bind('input', function () {
             $("#SubmitBtn").submit();
         });
     });
