@@ -172,6 +172,7 @@
     </Compile>
     <Compile Include="Models\EditModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\PostModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -259,6 +260,7 @@
     <Content Include="Views\Home\UserPage.cshtml" />
     <Content Include="Views\Home\EditModel.cshtml" />
     <Content Include="Views\Home\SearchUsers.cshtml" />
+    <Content Include="Views\Home\Wall.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

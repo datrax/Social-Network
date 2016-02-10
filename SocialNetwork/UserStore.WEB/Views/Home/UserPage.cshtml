@@ -19,7 +19,7 @@
                 <div style="margin-top: -10px;float: left">
                     <h1>@Model.Name @Model.Surname</h1>
                     @Html.ActionLink("Edit profile", "EditModel", null, new { @class = "modal1" })<br>
-                    @Html.ActionLink("Выход", "Login", "Account", null, new { style = " float: Left;" })
+                    @Html.ActionLink("Logout", "Login", "Account", null, new { style = " float: Left;" })
                 </div>
             </div>
 
@@ -41,12 +41,51 @@
 
 </div>
 
-<div class="row">
+<br>
+<br>
+<script type="text/javascript">
+   
+</script>
+<script>
+    
+    setInterval(myTimer, 500);
 
+    function myTimer() {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("Wall", "Home")',
+            data: { id: "@Model.Id" },
+            success: function (data) {
+                var div = document.getElementById("results2");
+                var oldScrollTop = div.scrollTop;
+                div.innerHTML = data;
+                div.scrollTop = oldScrollTop;
+                return false;
+            }
 
+        });
+        return false;
+    };
+</script>
 
+<div class="row " id="wall">
+    @using (Ajax.BeginForm("AddPost", "Home", new { id = Model.Id }, new AjaxOptions { UpdateTargetId = "" }))
+    {
+        <div style="" class="col-md-4"></div>
+            <div  class="col-md-4">
+                <input type="text" class="form-control" placeholder="" name="postField" id="postField" style="width: 120%;" />
+                <br>
+            </div>
+            <div style="" class="col-md-4">
+                <input type="submit" class="btn btn-primary btn-sm" value="Post">
+            </div>
+            }
+            <div class="col-md-10 col-md-offset-3">
 
-</div> <!-- /container -->
+                <div id="results2"></div>
+            </div>
+
+        </div> <!-- /container -->
 <!--<link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel='stylesheet'/>-->
 
 <script type="text/javascript">
@@ -77,6 +116,19 @@
             $("#SubmitBtn").submit();
         });
     });
+    function DeletePost(postId) {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("DeletePost", "Home")',
+            data: { id: postId },
+            success: function (data) {
+
+                return false;
+            }
+
+        });
+        return false;
+    };
 </script>
 
 

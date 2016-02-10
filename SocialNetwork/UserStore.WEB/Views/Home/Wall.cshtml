@@ -1,0 +1,57 @@
+﻿@model IEnumerable<UserStore.Models.PostModel>
+
+<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+<div class="container">
+    <div class="row">
+        @foreach (var post in Model)
+        {
+            <div class="col-sm-8">
+                <div class="panel panel-white post panel-shadow">
+                    <div class="post-heading">
+                        <div class="col-md-11">
+                            <div class="pull-left image">
+                                <!--<img src="http://bootdey.com/img/Content/user_1.jpg" class="img-circle avatar" alt="user profile image">-->
+                                <img align="left" class="img-circle avatar" src="/Home/ViewImage/@post.UserId" onerror="this.src = '/Content/user-default.png'" />
+                            </div>
+                            <div class="pull-left meta">
+                                <div class="title h5">
+                                    @Html.ActionLink(@post.Name + " " + @post.Surname, "UserPage", new {id = post.Login})
+                                </div>
+                                <h6 class="text-muted time">@post.DateTime</h6>
+                            </div>
+
+                        </div>
+                        @if (post.CanDelete)
+                        {
+                            <div class="col-md-1" onclick="DeletePost('@post.Id')">
+                                <div  class="btn btn-sm btn-primary">X</div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-1"></div>
+                        }
+                    </div>
+                    <div class="post-description">
+                        <p>@post.Text</p>
+                        <div class="stats">
+
+                            <a href="#" class="alert-link">
+                                Who likes it
+                            </a>
+                            <a href="#" class="btn  stat-item">
+                                <i class="glyphicon glyphicon-thumbs-up"></i>  @post.LikesCount
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<script>
+
+
+
+
+</script>

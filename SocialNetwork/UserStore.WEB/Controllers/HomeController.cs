@@ -134,6 +134,24 @@ namespace UserStore.Controllers
         {
             return new EmptyResult();
         }
- 
+        public ActionResult Wall(string id)
+        {
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<PostDTO, PostModel>());
+            var mapper = config.CreateMapper();            
+            return PartialView(mapper.Map<IEnumerable<PostModel>>(pageService.GetPosts(User.Identity.GetUserId(), id)));
+        }
+        public ActionResult DeletePost(string id)
+        {
+            pageService.DeletePost(Int32.Parse(id));
+
+            return new EmptyResult();
+        }
+        public ActionResult AddPost(string id,string postField)
+        {
+            pageService.AddPost(User.Identity.GetUserId(), id, postField);
+
+            return new EmptyResult();
+        }
+
     }
 }

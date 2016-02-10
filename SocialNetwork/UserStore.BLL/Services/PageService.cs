@@ -89,7 +89,7 @@ namespace UserStore.BLL.Services
             if (t > 0)
             {
                  name = input.Substring(0, t);
-                 surname = input.Substring(t);
+                 surname = input.Substring(t+1);
             }
             else
             {
@@ -120,6 +120,48 @@ namespace UserStore.BLL.Services
                                 a.Name.ToLower().Contains(name.ToLower()) &&
                                 a.Surname.ToLower().Contains(surname.ToLower())).ToList());
             }
+        }
+
+        public IEnumerable<PostDTO> GetPosts(string authorizeId,string urlId)
+        {
+            var user = Database.Users.Find(a => a.Id == urlId).First();
+            var posts=user.OnWallPosts.ToList();
+            List<PostDTO> wallPosts = new List<PostDTO>();
+            foreach (var post in posts)
+            {
+                wallPosts.Add(new PostDTO()
+                {
+                    Id = post.Id,
+                    DateTime = post.DateTime,
+                    Name = post.UserFrom.Name,
+                    Surname = post.UserFrom.Surname,
+                    Text = post.Text,
+                    CanDelete = authorizeId==post.UserFromId||authorizeId==post.UserToId,
+                    UserId = post.UserFromId,
+                    LikesCount = post.LikesUserPost.Count(),
+                    Login = post.UserFrom.Login
+                });
+            }
+            return wallPosts.OrderByDescending(a=>a.DateTime);
+        }
+        public bool AddPost(string authorizeId, string urlId,string text)
+        {
+            Post post = new Post()
+            {
+                DateTime = DateTime.Now,
+                Text = text,
+                UserFromId = authorizeId,
+                UserToId = urlId
+            };
+            Database.Posts.Create(post);
+            Database.Save();
+            return true;
+        }
+        public bool DeletePost(int postId)
+        {
+            Database.Posts.Delete(postId);
+            Database.Save();
+            return true;
         }
     }
 }

@@ -15,5 +15,8 @@ namespace UserStore.BLL.Interfaces
         bool SetAvatar(AvatarDTO avatar);
         bool ChangeUserInfo(UserDTO user);
         IEnumerable<UserDTO> FindUsers(string input);
+        IEnumerable<PostDTO> GetPosts(string authorizeId, string urlId);
+        bool DeletePost(int postId);
+        bool AddPost(string authorizeId, string urlId, string text);
     }
 }
