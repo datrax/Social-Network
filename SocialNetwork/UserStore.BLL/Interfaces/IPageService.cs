@@ -18,5 +18,6 @@ namespace UserStore.BLL.Interfaces
         IEnumerable<PostDTO> GetPosts(string authorizeId, string urlId);
         bool DeletePost(int postId);
         bool AddPost(string authorizeId, string urlId, string text);
+        bool LikePost(string authorizeId, int postId);
     }
 }

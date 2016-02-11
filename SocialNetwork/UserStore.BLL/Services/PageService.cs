@@ -85,11 +85,11 @@ namespace UserStore.BLL.Services
         public IEnumerable<UserDTO> FindUsers(string input)
         {
             var t = input.IndexOf(" ");
-            string name="", surname="";
+            string name = "", surname = "";
             if (t > 0)
             {
-                 name = input.Substring(0, t);
-                 surname = input.Substring(t+1);
+                name = input.Substring(0, t);
+                surname = input.Substring(t + 1);
             }
             else
             {
@@ -104,7 +104,7 @@ namespace UserStore.BLL.Services
                 return
                            mapper.Map<List<UserDTO>>(
                                Database.Users.Find(a => a.Surname.ToLower().Contains(surname.ToLower())));
-               
+
 
             }
             else
@@ -122,10 +122,10 @@ namespace UserStore.BLL.Services
             }
         }
 
-        public IEnumerable<PostDTO> GetPosts(string authorizeId,string urlId)
+        public IEnumerable<PostDTO> GetPosts(string authorizeId, string urlId)
         {
             var user = Database.Users.Find(a => a.Id == urlId).First();
-            var posts=user.OnWallPosts.ToList();
+            var posts = user.OnWallPosts.ToList();
             List<PostDTO> wallPosts = new List<PostDTO>();
             foreach (var post in posts)
             {
@@ -136,15 +136,15 @@ namespace UserStore.BLL.Services
                     Name = post.UserFrom.Name,
                     Surname = post.UserFrom.Surname,
                     Text = post.Text,
-                    CanDelete = authorizeId==post.UserFromId||authorizeId==post.UserToId,
+                    CanDelete = authorizeId == post.UserFromId || authorizeId == post.UserToId,
                     UserId = post.UserFromId,
                     LikesCount = post.LikesUserPost.Count(),
                     Login = post.UserFrom.Login
                 });
             }
-            return wallPosts.OrderByDescending(a=>a.DateTime);
+            return wallPosts.OrderByDescending(a => a.DateTime);
         }
-        public bool AddPost(string authorizeId, string urlId,string text)
+        public bool AddPost(string authorizeId, string urlId, string text)
         {
             Post post = new Post()
             {
@@ -160,6 +160,28 @@ namespace UserStore.BLL.Services
         public bool DeletePost(int postId)
         {
             Database.Posts.Delete(postId);
+            Database.Save();
+            return true;
+        }
+        public bool LikePost(string authorizeId, int postId)
+        {
+            var user = Database.Users.Find(a => a.Id == authorizeId).First();
+            var post = Database.Posts.Get(postId);
+            var t=post.LikesUserPost.Where(a => a.ClientProfileId == authorizeId).ToList();
+            
+            if (t.Count == 0)
+            {
+                post.LikesUserPost.Add(new LikesUserPost()
+                {
+                    PostId = postId,
+                    ClientProfileId = authorizeId
+                });
+                
+            }
+            else
+            {
+                Database.Likes.Delete(t.First().Id);
+            }
             Database.Save();
             return true;
         }

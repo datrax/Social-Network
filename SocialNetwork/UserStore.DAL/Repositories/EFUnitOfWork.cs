@@ -15,6 +15,7 @@ namespace UserStore.DAL.Repositories
         private UserRepository userRepository;
         private PostRepository postRepository;
         private PhotoRepository photoRepository;
+        private LikeUserRepository likeUserRepository;
 
         public EFUnitOfWork()
         {
@@ -46,6 +47,15 @@ namespace UserStore.DAL.Repositories
                 if (photoRepository == null)
                     photoRepository = new PhotoRepository(db);
                 return photoRepository;
+            }
+        }
+        public IRepository<LikesUserPost> Likes
+        {
+            get
+            {
+                if (likeUserRepository == null)
+                    likeUserRepository = new LikeUserRepository(db);
+                return likeUserRepository;
             }
         }
 

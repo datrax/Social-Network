@@ -152,6 +152,12 @@ namespace UserStore.Controllers
 
             return new EmptyResult();
         }
+        public ActionResult LikePost(string id)
+        {
+            pageService.LikePost(User.Identity.GetUserId(), Int32.Parse(id));
+
+            return new EmptyResult();
+        }
 
     }
 }

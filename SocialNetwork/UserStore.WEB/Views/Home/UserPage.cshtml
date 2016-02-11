@@ -129,6 +129,19 @@
         });
         return false;
     };
+    function LikePost(postId) {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("LikePost", "Home")',
+            data: { id: postId },
+            success: function (data) {
+
+                return false;
+            }
+
+        });
+        return false;
+    };
 </script>
 
 
