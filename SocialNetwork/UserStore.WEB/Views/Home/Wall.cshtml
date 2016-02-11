@@ -2,7 +2,7 @@
 
 <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
 <div class="container">
-    <div class="row">
+    <div class="row" id="ghj">
         @foreach (var post in Model)
         {
             <div class="col-sm-8">
@@ -35,23 +35,21 @@
                     <div class="post-description">
                         <p>@post.Text</p>
                         <div class="stats">
-
-                            <a href="#" class="alert-link">
+                            <div class="btn  stat-item" onclick="LikePost('@post.Id')">
+                                <i class="glyphicon glyphicon-thumbs-up"></i> @post.LikesCount
+                            </div>
+                            <a class="alert-link" onmouseover="GetLikes('@post.Id')">
                                 Who likes it
                             </a>
-                            <div  class="btn  stat-item" onclick="LikePost('@post.Id')">
-                                <i class="glyphicon glyphicon-thumbs-up"></i>  @post.LikesCount
-                            </div>
+
+                            <div id="@post.Id.ToString()results" style="background: white" class="qwerty"></div>
                         </div>
+                  
                     </div>
                 </div>
             </div>
         }
     </div>
 </div>
-<script>
 
 
-
-
-</script>

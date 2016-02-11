@@ -159,7 +159,14 @@ namespace UserStore.BLL.Services
         }
         public bool DeletePost(int postId)
         {
+            var post = Database.Posts.Get(postId);
+            var t = post.LikesUserPost.ToList();
+            foreach (var like in t)
+            {
+                Database.Likes.Delete(like.Id);
+            }
             Database.Posts.Delete(postId);
+     
             Database.Save();
             return true;
         }
@@ -184,6 +191,24 @@ namespace UserStore.BLL.Services
             }
             Database.Save();
             return true;
+        }
+
+        public IEnumerable<UserDTO> GetLikeUserList(int postId)
+        {
+            List<ClientProfile> users = new List<ClientProfile>();
+            var post = Database.Posts.Get(postId);
+            foreach (var t in post.LikesUserPost)
+            {
+               users.Add(t.ClientProfile);
+            }
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<ClientProfile, UserDTO>());
+            var mapper = config.CreateMapper();
+            return mapper.Map<List<UserDTO>>(users);
+        }
+
+        public string GetPostWallOwnerById(int postId)
+        {
+            return Database.Posts.Get(postId).UserToId;
         }
     }
 }

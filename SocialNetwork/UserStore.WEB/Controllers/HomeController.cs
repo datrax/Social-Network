@@ -138,25 +138,33 @@ namespace UserStore.Controllers
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<PostDTO, PostModel>());
             var mapper = config.CreateMapper();            
-            return PartialView(mapper.Map<IEnumerable<PostModel>>(pageService.GetPosts(User.Identity.GetUserId(), id)));
+            return PartialView("Wall",mapper.Map<IEnumerable<PostModel>>(pageService.GetPosts(User.Identity.GetUserId(), id)));
         }
         public ActionResult DeletePost(string id)
         {
+            var postId = pageService.GetPostWallOwnerById(Int32.Parse(id));
             pageService.DeletePost(Int32.Parse(id));
 
-            return new EmptyResult();
+            return Wall(postId);
         }
         public ActionResult AddPost(string id,string postField)
         {
             pageService.AddPost(User.Identity.GetUserId(), id, postField);
 
-            return new EmptyResult();
+            return Wall(id);
         }
         public ActionResult LikePost(string id)
         {
             pageService.LikePost(User.Identity.GetUserId(), Int32.Parse(id));
 
-            return new EmptyResult();
+            
+            return Wall(pageService.GetPostWallOwnerById(Int32.Parse(id)));
+        }
+        public ActionResult GetLikeUsers(string id)
+        {           
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<UserDTO, UserModel>());
+            var mapper = config.CreateMapper();
+            return PartialView("SearchUsers", mapper.Map<IEnumerable<UserModel>>(pageService.GetLikeUserList(Int32.Parse(id))));
         }
 
     }
