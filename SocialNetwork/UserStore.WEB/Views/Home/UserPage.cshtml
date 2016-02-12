@@ -25,16 +25,16 @@
 
 
 
-                <div class="search" style="float: right">
-                    @using (Ajax.BeginForm("Search", "Home", new AjaxOptions { UpdateTargetId = "results" }))
+            <div class="search" style="float: right">
+                @using (Ajax.BeginForm("Search", "Home", new AjaxOptions { UpdateTargetId = "results" }))
             {
-                        <input type="text" class="form-control input-sm" maxlength="64" placeholder="Search" name="searchField" id="searchField" />
-                        <button type="submit" class="btn btn3 btn-primary btn-sm" id="SubmitBtn">Search</button>
+                    <input type="text" class="form-control input-sm" maxlength="64" placeholder="Search" name="searchField" id="searchField" />
+                    <button type="submit" class="btn btn3 btn-primary btn-sm" id="SubmitBtn">Search</button>
 
-                    }
-                    <div id="results"  style=" z-index: 1000; position: absolute; margin-top: 50px; background-color: rgba(0, 120, 201, 0.1);width: 300px;"></div>
-                </div>
-      
+                }
+                <div id="results" style=" z-index: 1000; position: absolute; margin-top: 50px; background-color: rgba(0, 120, 201, 0.1);width: 300px;"></div>
+            </div>
+
         </div>
 
     </div>
@@ -44,10 +44,10 @@
 <br>
 <br>
 <script type="text/javascript">
-   
+
 </script>
 <script>
-    
+
     var timer = setInterval(myTimer, 5000);
 
     function myTimer() {
@@ -71,23 +71,32 @@
 </script>
 
 <div class="row " id="wall">
-    @using (Ajax.BeginForm("AddPost", "Home", new { id = Model.Id }, new AjaxOptions { UpdateTargetId = "results2" }))
-    {
-        <div style="" class="col-md-4"></div>
-            <div  class="col-md-4">
-                <input type="text" class="form-control" placeholder="" name="postField" id="postField" style="width: 120%;" />
-                <br>
+    <div class="col-xs-12 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="widget-area no-padding blank">
+            <div class="status-upload">
+                @using (Ajax.BeginForm("AddPost", "Home", new { id = Model.Id }, new AjaxOptions { UpdateTargetId = "results2" }))
+                {
+                    <textarea placeholder="What are you doing right now?" name="postField"></textarea>
+                    <ul>
+                        <li><a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Audio"><i class="fa fa-music"></i></a></li>
+                        <li><a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Video"><i class="fa fa-video-camera"></i></a></li>
+                        <li><a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Sound Record"><i class="fa fa-microphone"></i></a></li>
+                        <li><a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Picture"><i class="fa fa-picture-o"></i></a></li>
+                    </ul>
+                    <button type="submit" class="btn btn-primary "> Share</button>
+                }
             </div>
-            <div style="" class="col-md-4">
-                <input type="submit" class="btn btn-primary btn-sm" value="Post">
-            </div>
-            }
-            <div class="col-md-10 col-md-offset-3">
 
-                <div id="results2"></div>
-            </div>
-
-        </div> <!-- /container -->
+        </div>
+    </div>
+</div>
+<div class="row ">
+    <br>
+    <br>
+    <div class="col-md-offset-3">
+        <div id="results2"></div>
+    </div>
+</div>
 <!--<link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel='stylesheet'/>-->
 
 <script type="text/javascript">
@@ -138,7 +147,7 @@
         $.ajax({
             type: "POST",
             url: '@Url.Action("LikePost", "Home")',
-            data: {  id: postId },
+            data: { id: postId },
             success: function (data) {
                 var div = document.getElementById("results2");
                 var oldScrollTop = div.scrollTop;
@@ -153,12 +162,12 @@
     function GetLikes(postId) {
         clearInterval(timer);
         $.ajax({
-           type: "POST",
+            type: "POST",
             url: '@Url.Action("GetLikeUsers", "Home")',
             data: { id: postId },
             success: function (data) {
                 console.log(postId + "results");
-                var div = document.getElementById(postId+"results");
+                var div = document.getElementById(postId + "results");
                 var oldScrollTop = div.scrollTop;
                 div.innerHTML = data;
                 div.scrollTop = oldScrollTop;
@@ -168,11 +177,11 @@
         });
         return false;
     };
-var i = 0;
+    var i = 0;
 
 
-var n = 0;
-    $(document.body).on("mouseleave", "div.qwerty", function() {
+    var n = 0;
+    $(document.body).on("mouseleave", "div.qwerty", function () {
         myTimer();
         clearInterval(timer);
         timer = setInterval(myTimer, 5000);
