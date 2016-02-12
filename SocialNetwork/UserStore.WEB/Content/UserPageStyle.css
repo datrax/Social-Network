@@ -36,10 +36,13 @@ body {
     right: .3em;
     left: 90%;
     top: 10px;
-    height: 40px;
-    width: 40px;
-    background-color: lightblue;
+    height: 27px;
+    width: 27px;
+    background-color: #428bca !important; 
+    color: #fff !important;
+    background: #428bca !important; 
 }
+
 
 .ui-dialog-title {
     float: left;

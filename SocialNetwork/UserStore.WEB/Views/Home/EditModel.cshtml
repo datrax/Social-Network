@@ -1,110 +1,112 @@
 ﻿@model UserStore.Models.UserModel
 <div style="background-color: rgba(255, 255, 255, 0.1);">
 
-    <div class=""><br><br></div>
-    <form id="myForm" enctype="multipart/form-data" class="form-horizontal">
-        <fieldset>
+   
+        <br><br>
+        <form id="myForm" enctype="multipart/form-data" class="form-horizontal">
+            <fieldset>
+                <div style="margin-left: -40px; margin-top: 20px;">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div id="showErrorMessage" class="text-danger"></div>
 
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div id="showErrorMessage" class="text-danger"></div>
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="textinput">Name</label>
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control input-md", style = "margin:auto" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
 
-            <!-- Text input-->
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="textinput">Name</label>
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control input-md", style = "margin:auto" } })
-                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-                </div>
-            </div>
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="textinput">Surname</label>
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.Surname, new { htmlAttributes = new { @class = "form-control input-md", style = "margin:auto" } })
+                            @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
 
-            <!-- Text input-->
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="textinput">Surname</label>
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.Surname, new { htmlAttributes = new { @class = "form-control input-md", style = "margin:auto" } })
-                    @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <!-- Textarea -->
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="textinput">URL</label>
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.Login, new { htmlAttributes = new { @class = "form-control input-md", style = "margin:auto" } })
-                    @Html.ValidationMessageFor(model => model.Login, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-
-            <style>
-                .full-width {
-                    float: left;
-                    width: 100%;
-                    margin-top: 30px;
-                    min-height: 100px;
-                    position: relative;
-                }
-
-                .form-style-fake {
-                    position: absolute;
-                    top: 0px;
-                }
-
-                .form-style-base {
-                    position: absolute;
-                    top: 0px;
-                    z-index: 999;
-                    opacity: 0;
-                }
-
-                .form-control {
-                    padding: 10px 50px;
-                }
-
-                .form-input {
-                    height: 50px;
-                    border-radius: 0px;
-                    margin-top: 20px;
-                }
-
-                .input-place {
-                    position: absolute;
-                    top: 35px;
-                    left: 20px;
-                    font-size: 23px;
-                    color: gray;
-                }
-            </style>
-            <script>
-                $('input[id=base-input]').change(function () {
-                    $('#fake-input').val($(this).val().replace("C:\\fakepath\\", ""));
-
-                });
-            </script>
-
-            <div class="form-group">
-                <div class="full-width">
-
-                    <label class="col-md-4 control-label">Avatar</label>
-                    <div class="col-md-8">
-                        <input type="file" id="base-input" class="form-control form-input form-style-base" name="uploadImage">
-                        <input type="text" id="fake-input" class="form-control form-input form-style-fake" placeholder="Choose photo" readonly>
-                        <span class="glyphicon glyphicon-open input-place"></span>
+                    <!-- Textarea -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="textinput">URL</label>
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.Login, new { htmlAttributes = new { @class = "form-control input-md", style = "margin:auto" } })
+                            @Html.ValidationMessageFor(model => model.Login, "", new { @class = "text-danger" })
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- Button (Double) -->
-            <div class="form-group">
-                <div class="col-sm-6 col-sm-offset-5">
-                    <input onclick="addUserInfo()" type="button" id="btnSave" name="btnSave" class="btn btn-primary btn-sm center-block" value="Save" />
-                </div>
-            </div>
-            @Html.HiddenFor(a => a.Id)
 
-        </fieldset>
+    <style>
+        .full-width {
+            float: left;
+            width: 90%;
+            margin-top: -10px;
+            min-height: 100px;
+            position: relative;
+        }
+
+        .form-style-fake {
+            position: absolute;
+            top: 0px;
+        }
+
+        .form-style-base {
+            position: absolute;
+            top: 0px;
+            z-index: 999;
+            opacity: 0;
+        }
+
+        .form-control {
+            padding: 10px 50px;
+        }
+
+        .form-input {
+            height: 50px;
+            border-radius: 0px;
+            margin-top: 20px;
+        }
+
+        .input-place {
+            position: absolute;
+            top: 35px;
+            left: 20px;
+            font-size: 23px;
+            color: gray;
+        }
+    </style>
+    <script>
+        $('input[id=base-input]').change(function () {
+            $('#fake-input').val($(this).val().replace("C:\\fakepath\\", ""));
+
+        });
+    </script>
+
+    <div class="form-group">
+        <div class="full-width">
+
+            <label class="col-md-4 control-label">Avatar</label>
+            <div class="col-md-8">
+                <input type="file" id="base-input" class="form-control form-input form-style-base" name="uploadImage">
+                <input type="text" id="fake-input" class="form-control form-input form-style-fake" placeholder="Choose photo" readonly>
+                <span class="glyphicon glyphicon-open input-place"></span>
+            </div>
+        </div>
+    </div>
+    <!-- Button (Double) -->
+    <div class="form-group">
+        <div class="col-sm-6 col-sm-offset-5">
+            <input onclick="addUserInfo()" type="button" id="btnSave" name="btnSave" class="btn btn-primary btn-sm center-block" value="Save" />
+        </div>
+    </div>
+    @Html.HiddenFor(a => a.Id)
+
+    </fieldset>
     </form>
 
 </div>
+
 <script>
     function addUserInfo() {
         var form = $('#myForm');

@@ -72,15 +72,13 @@
 
 <div class="row " id="wall">
     <div class="col-xs-12 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-        <div class="widget-area no-padding blank">
+        <div class="widget-area no-padding blank panel panel-white post panel-shadow" >
             <div class="status-upload">
                 @using (Ajax.BeginForm("AddPost", "Home", new { id = Model.Id }, new AjaxOptions { UpdateTargetId = "results2" }))
                 {
                     <textarea placeholder="What are you doing right now?" name="postField"></textarea>
                     <ul>
-                        <li><a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Audio"><i class="fa fa-music"></i></a></li>
-                        <li><a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Video"><i class="fa fa-video-camera"></i></a></li>
-                        <li><a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Sound Record"><i class="fa fa-microphone"></i></a></li>
+                        
                         <li><a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Picture"><i class="fa fa-picture-o"></i></a></li>
                     </ul>
                     <button type="submit" class="btn btn-primary "> Share</button>
@@ -108,9 +106,11 @@
                 width: 500,
                 maxWidth: 500,
                 resizable: false,
-                closeText: "X",
+                closeText: "x",
+        
                 close: function (event, ui) {
                     dialog.remove();
+
 
                 },
 
