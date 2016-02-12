@@ -75,7 +75,7 @@ namespace UserStore.Controllers
         {
             var item = pageService.GetAvatar(id);
             if (item == null)
-                return "/Content/user-default.png";
+                return null;
             return "/Home/ViewImage/" + id;
         }
         [HttpPost]
@@ -147,10 +147,23 @@ namespace UserStore.Controllers
 
             return Wall(postId);
         }
-        public ActionResult AddPost(string id,string postField)
+        public ActionResult AddPost(string id,string postField, HttpPostedFileBase uploadImage)
         {
             pageService.AddPost(User.Identity.GetUserId(), id, postField);
-
+            if (uploadImage != null)
+            {
+                byte[] imageData = null;
+                using (var binaryReader = new BinaryReader(uploadImage.InputStream))
+                {
+                    imageData = binaryReader.ReadBytes(uploadImage.ContentLength);
+                }
+                var headerImage = new AvatarDTO()
+                {
+                    Avatar = imageData,
+                    UserId = postField
+                };
+                pageService.SetAvatar(headerImage);
+            }
             return Wall(id);
         }
         public ActionResult LikePost(string id)

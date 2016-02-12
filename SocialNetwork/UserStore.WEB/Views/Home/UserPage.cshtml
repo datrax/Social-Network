@@ -72,16 +72,21 @@
 
 <div class="row " id="wall">
     <div class="col-xs-12 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-        <div class="widget-area no-padding blank panel panel-white post panel-shadow" >
+        <div class="widget-area no-padding blank panel panel-white post panel-shadow">
             <div class="status-upload">
-                @using (Ajax.BeginForm("AddPost", "Home", new { id = Model.Id }, new AjaxOptions { UpdateTargetId = "results2" }))
+                @using (Ajax.BeginForm("AddPost", "Home", new { id = Model.Id }, new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "results2" }, new { enctype = "multipart/form-data" }))
                 {
-                    <textarea placeholder="What are you doing right now?" name="postField"></textarea>
-                    <ul>
-                        
-                        <li><a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Picture"><i class="fa fa-picture-o"></i></a></li>
-                    </ul>
-                    <button type="submit" class="btn btn-primary "> Share</button>
+
+                    <textarea placeholder="What are you doing right now?" name="postField" id="postField"></textarea>
+
+                                    <div class="image-upload" style="display: inline-block; margin-left: 20px; margin-top: 20px;">
+                                        <label for="uploadImage">
+                                            <a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Picture" onclick="UploadFile()"><i class="fa fa-picture-o"></i></a>
+                                        </label>
+                                        <input type="file" name="uploadImage" id="uploadImage">
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary " > Post</button>
                 }
             </div>
 
@@ -98,6 +103,32 @@
 <!--<link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel='stylesheet'/>-->
 
 <script type="text/javascript">
+
+    window.addEventListener("submit", function (e) {
+        var form = e.target;
+        if (form.getAttribute("enctype") === "multipart/form-data") {
+            if (form.dataset.ajax) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                var xhr = new XMLHttpRequest();
+                xhr.open(form.method, form.action);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        if (form.dataset.ajaxUpdate) {
+                            var updateTarget = document.querySelector(form.dataset.ajaxUpdate);
+                            if (updateTarget) {
+                                updateTarget.innerHTML = xhr.responseText;
+                            }
+                        }
+                    }
+                };           
+                xhr.send(new FormData(form));
+                document.getElementById("uploadImage").value = "";            
+                document.getElementById("postField").value = "";
+                return false;
+            }
+        }
+    }, true);
     $(function () {
         $('.modal1').click(function () {
             $('<div/>').appendTo('body').dialog({
@@ -107,7 +138,7 @@
                 maxWidth: 500,
                 resizable: false,
                 closeText: "x",
-        
+
                 close: function (event, ui) {
                     dialog.remove();
 

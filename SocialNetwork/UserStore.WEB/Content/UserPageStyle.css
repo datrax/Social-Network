@@ -349,3 +349,7 @@ border-left-color: #2dcb73;
 margin-right: 7px;
 }
 
+.image-upload > input
+{
+    display: none;
+}

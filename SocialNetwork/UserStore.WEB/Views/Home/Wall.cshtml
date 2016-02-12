@@ -34,6 +34,7 @@
                     </div>
                     <div class="post-description" >
                         <p style="word-wrap: break-word;">@post.Text</p>
+                        <img src="/Home/ViewImage/@post.Text" style="max-height: 400px; max-width: 100%">
                         <div class="stats">
                             <div class="btn  stat-item" onclick="LikePost('@post.Id')">
                                 <i class="glyphicon glyphicon-thumbs-up"></i> @post.LikesCount
