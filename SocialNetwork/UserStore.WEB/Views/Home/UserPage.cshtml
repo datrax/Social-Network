@@ -87,7 +87,7 @@
                                         <input type="file" name="uploadImage" id="uploadImage">  
                                     </div>
                              
-                                    <button type="submit" class="btn btn-primary " > Post</button>
+                                    <button type="submit" class="btn btn-primary image-preview-clear" > Post</button>
                 }
             </div>
 
@@ -126,6 +126,7 @@
                 xhr.send(new FormData(form));
                 document.getElementById("uploadImage").value = "";            
                 document.getElementById("postField").value = "";
+                $('.image-preview-filename').html("");
                 return false;
             }
         }
@@ -252,9 +253,8 @@
         // Clear event
         $('.image-preview-clear').click(function() {
             $('.image-preview').attr("data-content", "").popover('hide');
-            $('.image-preview-filename').val("");
-            $('.image-preview-clear').hide();
-            $('.image-preview-input input:file').html("");
+            $('.image-preview-filename').html("");
+            $('.image-preview-input input:file').val("");
             $(".image-preview-input-title").text("Browse");
         });
 
