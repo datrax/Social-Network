@@ -32,6 +32,8 @@ namespace UserStore.Controllers
 
         public ActionResult Login()
         {
+            if (User.Identity.IsAuthenticated)
+                return Redirect("/");
             return View();
         }
 
@@ -42,8 +44,8 @@ namespace UserStore.Controllers
             await SetInitialDataAsync();
 
             if (ModelState.IsValid)
-            {               
-                UserDTO userDto = new UserDTO { Email = model.Email, Password = model.Password};
+            {
+                UserDTO userDto = new UserDTO { Email = model.Email, Password = model.Password };
                 ClaimsIdentity claim = await UserService.Authenticate(userDto);
                 if (claim == null)
                 {
@@ -65,11 +67,13 @@ namespace UserStore.Controllers
         public ActionResult Logout()
         {
             AuthenticationManager.SignOut();
-            return RedirectToAction("Logout", "Account");
+            return RedirectToAction("Login", "Account");
         }
 
         public ActionResult Register()
         {
+            if (User.Identity.IsAuthenticated)
+                return Redirect("/");
             return View();
         }
 
@@ -77,6 +81,7 @@ namespace UserStore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterModel model)
         {
+
             await SetInitialDataAsync();
 
             if (ModelState.IsValid)
@@ -87,7 +92,7 @@ namespace UserStore.Controllers
                     Password = model.Password,
                     Surname = model.Surname,
                     Name = model.Name,
-                    Login=model.Login,
+                    Login = model.Login,
                     Role = "user",
                 };
                 OperationDetails operationDetails = await UserService.Create(userDto);

@@ -20,7 +20,7 @@
                 <div style="margin-top: -10px;float: left">
                     <h1>@Model.Name @Model.Surname</h1>
                     @Html.ActionLink("Edit profile", "EditModel", null, new { id = "modalWindow" })<br>
-                    @Html.ActionLink("Logout", "Login", "Account", null, new { style = " float: Left;" })
+                    @Html.ActionLink("Logout", "Logout", "Account", null, new { style = " float: Left;" })
                 </div>
             </div>
 
@@ -74,19 +74,19 @@
 <div class="row " id="wall">
     <div class="col-xs-12 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
         <div class="widget-area no-padding blank panel panel-white post panel-shadow">
-            <div class="status-upload image-preview">
+            <div class="status-upload">
                 @using (Ajax.BeginForm("AddPost", "Home", new { id = Model.Id }, new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "results2" }, new { enctype = "multipart/form-data" }))
                 {
+                    <span class="image-preview">
+                        <textarea placeholder="Leave your message here" name="postField" id="postField"></textarea>
 
-                    <textarea placeholder="Leave your message here" name="postField" id="postField"></textarea>
-
-                                    <div class="image-upload" style="display: inline-block; margin-left: 20px; margin-top: 20px;">
-                                        <label for="uploadImage">
-                                            <a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Picture" ><i class="fa fa-picture-o image-preview-filename"></i></a>
-                                        </label>
-                                        <input type="file" name="uploadImage" id="uploadImage">  
-                                    </div>
-                             
+                        <div class="image-upload" style="display: inline-block; margin-left: 20px; margin-top: 20px;">
+                            <label for="uploadImage">
+                                <a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Picture"><i class="fa fa-picture-o image-preview-filename"></i></a>
+                            </label>
+                            <input type="file" name="uploadImage" id="uploadImage">
+                        </div>
+                    </span>
                                     <button type="submit" class="btn btn-primary image-preview-clear" > Post</button>
                 }
             </div>
