@@ -149,21 +149,16 @@ namespace UserStore.Controllers
         }
         public ActionResult AddPost(string id,string postField, HttpPostedFileBase uploadImage)
         {
-            pageService.AddPost(User.Identity.GetUserId(), id, postField);
+            byte[] imageData = null;
             if (uploadImage != null)
             {
-                byte[] imageData = null;
+
                 using (var binaryReader = new BinaryReader(uploadImage.InputStream))
                 {
                     imageData = binaryReader.ReadBytes(uploadImage.ContentLength);
                 }
-                var headerImage = new AvatarDTO()
-                {
-                    Avatar = imageData,
-                    UserId = postField
-                };
-                pageService.SetAvatar(headerImage);
             }
+            pageService.AddPost(User.Identity.GetUserId(), id, postField, imageData);                   
             return Wall(id);
         }
         public ActionResult LikePost(string id)

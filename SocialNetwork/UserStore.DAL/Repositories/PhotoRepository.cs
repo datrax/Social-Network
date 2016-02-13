@@ -30,9 +30,11 @@ namespace UserStore.DAL.Repositories
             return db.Avatars.Find(id);
         }
 
-        public void Create(Photo photo)
+        public Photo Create(Photo photo)
         {
             db.Avatars.Add(photo);
+            db.SaveChanges();
+            return photo;
         }
 
         public void Update(Photo photo)
@@ -49,7 +51,7 @@ namespace UserStore.DAL.Repositories
 
         public void Delete(int id)
         {
-            Photo photo = db.Avatars.Find(id);
+            Photo photo = db.Avatars.Find(id.ToString());
             if (photo != null)
                 db.Avatars.Remove(photo);
         }

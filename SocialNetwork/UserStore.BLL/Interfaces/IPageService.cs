@@ -17,7 +17,7 @@ namespace UserStore.BLL.Interfaces
         IEnumerable<UserDTO> FindUsers(string input);
         IEnumerable<PostDTO> GetPosts(string authorizeId, string urlId);
         bool DeletePost(int postId);
-        bool AddPost(string authorizeId, string urlId, string text);
+        bool AddPost(string authorizeId, string urlId, string text, byte[] image);
         bool LikePost(string authorizeId, int postId);
         IEnumerable<UserDTO> GetLikeUserList(int postId);
         string GetPostWallOwnerById(int postId);

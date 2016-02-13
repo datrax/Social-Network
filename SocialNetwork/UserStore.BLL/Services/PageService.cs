@@ -139,21 +139,34 @@ namespace UserStore.BLL.Services
                     CanDelete = authorizeId == post.UserFromId || authorizeId == post.UserToId,
                     UserId = post.UserFromId,
                     LikesCount = post.LikesUserPost.Count(),
-                    Login = post.UserFrom.Login
+                    Login = post.UserFrom.Login,
+                    HasPhoto = post.HasPhoto
                 });
             }
             return wallPosts.OrderByDescending(a => a.DateTime);
         }
-        public bool AddPost(string authorizeId, string urlId, string text)
+        public bool AddPost(string authorizeId, string urlId, string text,byte[] image)
         {
             Post post = new Post()
             {
                 DateTime = DateTime.Now,
                 Text = text,
                 UserFromId = authorizeId,
-                UserToId = urlId
+                UserToId = urlId,
+                HasPhoto= image != null
             };
             Database.Posts.Create(post);
+            if (image != null)
+            {
+                var headerImage = new AvatarDTO()
+                {
+                    Avatar = image,
+                    UserId = post.Id.ToString()
+                };
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<AvatarDTO, Photo>());
+                var mapper = config.CreateMapper();
+                Database.Avatars.Create(mapper.Map<Photo>(headerImage));
+            }
             Database.Save();
             return true;
         }
@@ -165,6 +178,13 @@ namespace UserStore.BLL.Services
             {
                 Database.Likes.Delete(like.Id);
             }
+            var photos = Database.Avatars.Find(a => a.UserId ==  post.Id.ToString());
+            foreach (var photo in photos)
+            {
+                Database.Avatars.Delete(Int32.Parse(photo.UserId));
+            }
+           
+          
             Database.Posts.Delete(postId);
      
             Database.Save();

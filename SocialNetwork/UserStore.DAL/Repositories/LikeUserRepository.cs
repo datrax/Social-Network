@@ -29,9 +29,11 @@ namespace UserStore.DAL.Repositories
             return db.LikesUserPost.Find(id);
         }
 
-        public void Create(LikesUserPost profile)
+        public LikesUserPost Create(LikesUserPost profile)
         {
             db.LikesUserPost.Add(profile);
+            db.SaveChanges();
+            return profile;
         }
 
         public void Update(LikesUserPost profile)

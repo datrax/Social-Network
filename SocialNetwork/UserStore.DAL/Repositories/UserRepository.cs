@@ -29,9 +29,11 @@ namespace UserStore.DAL.Repositories
             return db.ClientProfiles.Find(id);
         }
 
-        public void Create(ClientProfile profile)
+        public ClientProfile Create(ClientProfile profile)
         {
             db.ClientProfiles.Add(profile);
+            db.SaveChanges();
+            return profile;
         }
 
         public void Update(ClientProfile profile)

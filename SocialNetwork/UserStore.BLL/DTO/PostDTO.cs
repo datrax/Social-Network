@@ -17,5 +17,6 @@ namespace UserStore.BLL.DTO
         public string Login { get; set; }
         public string UserId { get; set; }
         public int LikesCount { get; set; }
+        public bool HasPhoto { get; set; }
     }
 }

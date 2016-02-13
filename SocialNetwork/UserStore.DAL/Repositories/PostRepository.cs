@@ -29,9 +29,11 @@ namespace UserStore.DAL.Repositories
             return db.Post.Find(id);
         }
 
-        public void Create(Post profile)
+        public Post Create(Post profile)
         {
             db.Post.Add(profile);
+            db.SaveChanges();
+            return profile;
         }
 
         public void Update(Post profile)
