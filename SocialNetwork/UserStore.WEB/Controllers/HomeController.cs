@@ -83,7 +83,8 @@ namespace UserStore.Controllers
                 return Json(new { result = false, responseText = "Please enter surname" });
             if(pageService.GetUserByLogin(model.Login)!=null&& pageService.GetUserByLogin(model.Login).Id!=model.Id)
                 return Json(new { result = false, responseText = "This URL is busy" });
-
+            if(!(model.Login.All(c => Char.IsLetterOrDigit(c) || c == '_')&& model.Login.Any(char.IsLetter)))
+                return Json(new { result = false, responseText = "URL can contain only letters, numbers and '_' and must have at least one letter!" });
             var config = new MapperConfiguration(cfg => cfg.CreateMap<UserModel, UserDTO>());
             var mapper = config.CreateMapper();
             var t = mapper.Map<UserDTO>(model);
