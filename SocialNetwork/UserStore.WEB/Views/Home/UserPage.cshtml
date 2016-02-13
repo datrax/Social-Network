@@ -74,7 +74,7 @@
 <div class="row " id="wall">
     <div class="col-xs-12 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
         <div class="widget-area no-padding blank panel panel-white post panel-shadow">
-            <div class="status-upload">
+            <div class="status-upload image-preview">
                 @using (Ajax.BeginForm("AddPost", "Home", new { id = Model.Id }, new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "results2" }, new { enctype = "multipart/form-data" }))
                 {
 
@@ -82,11 +82,11 @@
 
                                     <div class="image-upload" style="display: inline-block; margin-left: 20px; margin-top: 20px;">
                                         <label for="uploadImage">
-                                            <a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Picture" onclick="UploadFile()"><i class="fa fa-picture-o"></i></a>
+                                            <a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Picture" ><i class="fa fa-picture-o image-preview-filename"></i></a>
                                         </label>
-                                        <input type="file" name="uploadImage" id="uploadImage">
+                                        <input type="file" name="uploadImage" id="uploadImage">  
                                     </div>
-
+                             
                                     <button type="submit" class="btn btn-primary " > Post</button>
                 }
             </div>
@@ -220,6 +220,63 @@
 
     });
 
+    $(document).on('click', '#close-preview', function () {
+        $('.image-preview').popover('hide');
+        // Hover befor close the preview
+        $('.image-preview').hover(
+            function () {
+                $('.image-preview').popover('show');
+            },
+             function () {
+                 $('.image-preview').popover('hide');
+             }
+        );
+    });
+    $(function() {
+        // Create the close button
+        var closebtn = $('<button/>', {
+            type: "button",
+            text: 'x',
+            id: 'close-preview',
+            style: 'font-size: initial;',
+        });
+        closebtn.attr("class", "close pull-right");
+        // Set the popover default content
+        $('.image-preview').popover({
+            trigger: 'manual',
+            html: true,
+            title: "<strong>Preview</strong>" + $(closebtn)[0].outerHTML,
+            content: "There's no image",
+            placement: 'bottom'
+        });
+        // Clear event
+        $('.image-preview-clear').click(function() {
+            $('.image-preview').attr("data-content", "").popover('hide');
+            $('.image-preview-filename').val("");
+            $('.image-preview-clear').hide();
+            $('.image-preview-input input:file').html("");
+            $(".image-preview-input-title").text("Browse");
+        });
+
+        $("#uploadImage").change(function() {
+            var img = $('<img/>', {
+                id: 'dynamic',
+                width: 250,
+                height: 200
+            });
+            var file = this.files[0];
+            var reader = new FileReader();
+            // Set preview image into the popover data-content
+            reader.onload = function(e) {
+                $(".image-preview-input-title").text("Change");
+                $(".image-preview-clear").show();
+                $(".image-preview-filename").html(file.name);
+                img.attr('src', e.target.result);
+                $(".image-preview").attr("data-content", $(img)[0].outerHTML).popover("show");
+            }
+            reader.readAsDataURL(file);
+        })
+    });
 </script>
 
 
