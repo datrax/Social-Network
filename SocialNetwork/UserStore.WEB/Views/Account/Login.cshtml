@@ -2,7 +2,7 @@
 @model UserStore.Models.LoginModel
 
 @{
-    ViewBag.Title = "UserId";
+    ViewBag.Title = "Login";
 }
 <link href="~/Content/LoginRegisterStyle.css" rel="stylesheet" />
 <div class="container">
@@ -12,7 +12,7 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-6">
-                            <a href="#" class="active" id="login-form-link">UserId</a>
+                            <a href="#" class="active" id="login-form-link">Login</a>
                         </div>
                         <div class="col-xs-6">
                             @Html.ActionLink("Register", "Register", null, new { id = "register-form-link" })
@@ -53,7 +53,7 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-6 col-sm-offset-3">
-                                            <input type="submit" value="UserId" class="form-control btn btn-login">
+                                            <input type="submit" value="Login" class="form-control btn btn-login">
                                         </div>
                                     </div>
                                 </div>

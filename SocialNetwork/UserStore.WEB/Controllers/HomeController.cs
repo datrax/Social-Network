@@ -163,9 +163,7 @@ namespace UserStore.Controllers
         }
         public ActionResult LikePost(string id)
         {
-            pageService.LikePost(User.Identity.GetUserId(), Int32.Parse(id));
-
-            
+            pageService.LikePost(User.Identity.GetUserId(), Int32.Parse(id));            
             return Wall(pageService.GetPostWallOwnerById(Int32.Parse(id)));
         }
         public ActionResult GetLikeUsers(string id)

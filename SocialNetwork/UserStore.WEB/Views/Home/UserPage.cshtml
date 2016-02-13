@@ -8,6 +8,7 @@
 <link href="~/Content/UserPageStyle.css" rel="stylesheet" />
 <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
 <div class="container">
     <div class="fb-profile">
         <div class="row">
@@ -18,7 +19,7 @@
                 </div>
                 <div style="margin-top: -10px;float: left">
                     <h1>@Model.Name @Model.Surname</h1>
-                    @Html.ActionLink("Edit profile", "EditModel", null, new { @class = "modal1" })<br>
+                    @Html.ActionLink("Edit profile", "EditModel", null, new { id = "modalWindow" })<br>
                     @Html.ActionLink("Logout", "Login", "Account", null, new { style = " float: Left;" })
                 </div>
             </div>
@@ -77,7 +78,7 @@
                 @using (Ajax.BeginForm("AddPost", "Home", new { id = Model.Id }, new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "results2" }, new { enctype = "multipart/form-data" }))
                 {
 
-                    <textarea placeholder="What are you doing right now?" name="postField" id="postField"></textarea>
+                    <textarea placeholder="Leave your message here" name="postField" id="postField"></textarea>
 
                                     <div class="image-upload" style="display: inline-block; margin-left: 20px; margin-top: 20px;">
                                         <label for="uploadImage">
@@ -130,7 +131,7 @@
         }
     }, true);
     $(function () {
-        $('.modal1').click(function () {
+        $('#modalWindow').click(function () {
             $('<div/>').appendTo('body').dialog({
                 position: { my: "center", at: "top+180", of: window },
                 title: "Edit",
