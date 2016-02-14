@@ -42,7 +42,7 @@
     <div class="col-xs-12 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
         <div class="widget-area no-padding blank panel panel-white post panel-shadow">
             <div class="status-upload">
-                @using (Ajax.BeginForm("AddPost", "Home", new { id = Model.Id }, new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "results2" }, new { enctype = "multipart/form-data" }))
+                @using (Ajax.BeginForm("AddPost", "Home", new { id = Model.Id }, new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "wallResult" }, new { enctype = "multipart/form-data" }))
                 {
                     <textarea placeholder="Leave your message here" name="postField" id="postField"></textarea>
                     <div class="image-upload image-preview" style="display: inline-block; margin-left: 20px; margin-top: 20px;">
@@ -62,7 +62,7 @@
     <br>
     <br>
     <div class="col-md-offset-3">
-        <div id="results2"></div>
+        <div id="wallResult"></div>
     </div>
 </div>
 
@@ -75,7 +75,7 @@
             url: '/Home/Wall/',
             data: { id: "@Model.Id" },
             success: function (data) {
-                var div = document.getElementById("results2");
+                var div = document.getElementById("wallResult");
                 var oldScrollTop = div.scrollTop;
                 div.innerHTML = data;
                 div.scrollTop = oldScrollTop;

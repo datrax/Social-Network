@@ -58,7 +58,7 @@ function DeletePost(postId) {
         url: '/Home/DeletePost/',
         data: { id: postId },
         success: function (data) {
-            var div = document.getElementById("results2");
+            var div = document.getElementById("wallResult");
             var oldScrollTop = div.scrollTop;
             div.innerHTML = data;
             div.scrollTop = oldScrollTop;
@@ -74,7 +74,7 @@ function LikePost(postId) {
         url: '/Home/LikePost/',
         data: { id: postId },
         success: function (data) {
-            var div = document.getElementById("results2");
+            var div = document.getElementById("wallResult");
             var oldScrollTop = div.scrollTop;
             div.innerHTML = data;
             div.scrollTop = oldScrollTop;
