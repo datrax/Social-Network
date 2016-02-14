@@ -1,7 +1,7 @@
 ﻿@model UserStore.Models.UserModel
 
 @{
-    ViewBag.Title = "User Page";
+    ViewBag.Title = Model.Name + " " + Model.Surname;
 }
 <script src="~/Scripts/jquery-ui-1.11.4.js"></script>
 <link href="~/Content/themes/base/theme.css" rel="stylesheet" />
@@ -9,6 +9,7 @@
 <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+<script src="~/Scripts/UserPageScripts.js"></script>
 <div class="container">
     <div class="fb-profile">
         <div class="row">
@@ -23,70 +24,34 @@
                     @Html.ActionLink("Logout", "Logout", "Account", null, new { style = " float: Left;" })
                 </div>
             </div>
-
-
-
             <div class="search" style="float: right">
                 @using (Ajax.BeginForm("Search", "Home", new AjaxOptions { UpdateTargetId = "results" }))
-            {
+                {
                     <input type="text" class="form-control input-sm" maxlength="64" placeholder="Search" name="searchField" id="searchField" />
                     <button type="submit" class="btn btn3 btn-primary btn-sm" id="SubmitBtn">Search</button>
-
                 }
                 <div id="results" style=" z-index: 1000; position: absolute; margin-top: 50px; background-color: rgba(0, 120, 201, 0.1);width: 300px;"></div>
             </div>
-
         </div>
-
     </div>
-
 </div>
 
 <br>
 <br>
-<script type="text/javascript">
-
-</script>
-<script>
-
-    var timer = setInterval(myTimer, 5000);
-
-    function myTimer() {
-        $.ajax({
-            type: "POST",
-            url: '@Url.Action("Wall", "Home")',
-            data: { id: "@Model.Id" },
-            success: function (data) {
-                var div = document.getElementById("results2");
-                var oldScrollTop = div.scrollTop;
-                div.innerHTML = data;
-                div.scrollTop = oldScrollTop;
-                return false;
-            }
-
-        });
-        return false;
-    };
-
-    myTimer();
-</script>
-
 <div class="row " id="wall">
     <div class="col-xs-12 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
         <div class="widget-area no-padding blank panel panel-white post panel-shadow">
             <div class="status-upload">
                 @using (Ajax.BeginForm("AddPost", "Home", new { id = Model.Id }, new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "results2" }, new { enctype = "multipart/form-data" }))
                 {
-                    
-                        <textarea placeholder="Leave your message here" name="postField" id="postField"></textarea>
-                
-                            <div class="image-upload image-preview" style="display: inline-block; margin-left: 20px; margin-top: 20px;">
-                                <label for="uploadImage">
-                                    <a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Picture"><i class="fa fa-picture-o image-preview-filename"></i></a>
-                                </label>
-                                <input type="file" name="uploadImage" id="uploadImage">
-                            </div>
-                                    <button type="submit" class="btn btn-primary image-preview-clear" > Post</button>
+                    <textarea placeholder="Leave your message here" name="postField" id="postField"></textarea>
+                    <div class="image-upload image-preview" style="display: inline-block; margin-left: 20px; margin-top: 20px;">
+                        <label for="uploadImage">
+                            <a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Picture"><i class="fa fa-picture-o image-preview-filename"></i></a>
+                        </label>
+                        <input type="file" name="uploadImage" id="uploadImage">
+                    </div>
+                    <button type="submit" class="btn btn-primary image-preview-clear"> Post</button>
                 }
             </div>
 
@@ -100,70 +65,15 @@
         <div id="results2"></div>
     </div>
 </div>
-<!--<link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel='stylesheet'/>-->
-
-<script type="text/javascript">
-
-    window.addEventListener("submit", function (e) {
-        var form = e.target;
-        if (form.getAttribute("enctype") === "multipart/form-data") {
-            if (form.dataset.ajax) {
-                e.preventDefault();
-                e.stopImmediatePropagation();
-                var xhr = new XMLHttpRequest();
-                xhr.open(form.method, form.action);
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState == 4 && xhr.status == 200) {
-                        if (form.dataset.ajaxUpdate) {
-                            var updateTarget = document.querySelector(form.dataset.ajaxUpdate);
-                            if (updateTarget) {
-                                updateTarget.innerHTML = xhr.responseText;
-                            }
-                        }
-                    }
-                };           
-                xhr.send(new FormData(form));
-                document.getElementById("uploadImage").value = "";            
-                document.getElementById("postField").value = "";
-                $('.image-preview-filename').html("");
-                return false;
-            }
-        }
-    }, true);
-    $(function () {
-        $('#modalWindow').click(function () {
-            $('<div/>').appendTo('body').dialog({
-                position: { my: "center", at: "top+180", of: window },
-                title: "Edit",
-                width: 500,
-                maxWidth: 500,
-                resizable: false,
-                closeText: "x",
-
-                close: function (event, ui) {
-                    dialog.remove();
 
 
-                },
-
-                modal: true
-            }).load(this.href, {});
-
-            return false;
-        });
-    });
-</script>
-<script type="text/javascript">
-    $(function () {
-        $("#searchField").bind('input', function () {
-            $("#SubmitBtn").submit();
-        });
-    });
-    function DeletePost(postId) {
+<script>
+    var timer = setInterval(myTimer, 5000);
+    function myTimer() {
         $.ajax({
             type: "POST",
-            url: '@Url.Action("DeletePost", "Home")',
-            data: { id: postId },
+            url: '/Home/Wall/',
+            data: { id: "@Model.Id" },
             success: function (data) {
                 var div = document.getElementById("results2");
                 var oldScrollTop = div.scrollTop;
@@ -171,112 +81,8 @@
                 div.scrollTop = oldScrollTop;
                 return false;
             }
-
         });
         return false;
     };
-    function LikePost(postId) {
-        $.ajax({
-            type: "POST",
-            url: '@Url.Action("LikePost", "Home")',
-            data: { id: postId },
-            success: function (data) {
-                var div = document.getElementById("results2");
-                var oldScrollTop = div.scrollTop;
-                div.innerHTML = data;
-                div.scrollTop = oldScrollTop;
-                return false;
-            }
-
-        });
-        return false;
-    };
-    function GetLikes(postId) {
-        clearInterval(timer);
-        $.ajax({
-            type: "POST",
-            url: '@Url.Action("GetLikeUsers", "Home")',
-            data: { id: postId },
-            success: function (data) {
-                console.log(postId + "results");
-                var div = document.getElementById(postId + "results");
-                var oldScrollTop = div.scrollTop;
-                div.innerHTML = data;
-                div.scrollTop = oldScrollTop;
-                return false;
-            }
-
-        });
-        return false;
-    };
-    var i = 0;
-
-
-    var n = 0;
-    $(document.body).on("mouseleave", "div.qwerty", function () {
-        myTimer();
-        clearInterval(timer);
-        timer = setInterval(myTimer, 5000);
-
-    });
-
-    $(document).on('click', '#close-preview', function () {
-        $('.image-preview').popover('hide');
-        // Hover befor close the preview
-        $('.image-preview').hover(
-            function () {
-                $('.image-preview').popover('show');
-            },
-             function () {
-                 $('.image-preview').popover('hide');
-             }
-        );
-    });
-    $(function() {
-        // Create the close button
-        var closebtn = $('<button/>', {
-            type: "button",
-            text: 'x',
-            id: 'close-preview',
-            style: 'font-size: initial;',
-        });
-        closebtn.attr("class", "close pull-right");
-        // Set the popover default content
-        $('.image-preview').popover({
-            trigger: 'manual',
-            html: true,
-            title: "<strong>Preview</strong>" + $(closebtn)[0].outerHTML,
-            content: "There's no image",
-            placement: 'bottom'
-        });
-        // Clear event
-        $('.image-preview-clear').click(function() {
-            $('.image-preview').attr("data-content", "").popover('hide');
-            $('.image-preview-filename').html("");
-            $('.image-preview-input input:file').val("");
-            $(".image-preview-input-title").text("Browse");
-        });
-
-        $("#uploadImage").change(function() {
-            var img = $('<img/>', {
-                id: 'dynamic',
-                width: 250,
-                height: 200
-            });
-            var file = this.files[0];
-            var reader = new FileReader();
-            // Set preview image into the popover data-content
-            reader.onload = function(e) {
-                $(".image-preview-input-title").text("Change");
-                $(".image-preview-clear").show();
-                $(".image-preview-filename").html(file.name);
-                img.attr('src', e.target.result);
-                $(".image-preview").attr("data-content", $(img)[0].outerHTML).popover("show");
-            }
-            reader.readAsDataURL(file);
-        })
-    });
+    myTimer();
 </script>
-
-
-
