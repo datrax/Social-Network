@@ -1,7 +1,7 @@
 ﻿@model UserStore.Models.UserModel
 <div style="background-color: rgba(255, 255, 255, 0.1); max-width: 550px; margin-left: 20px;">
 
-   
+    <input onclick="Close()" type="button"  name="btnSave" class="btn btn-primary btn-sm center-block" value="X"style="float: right; margin-top: -40px; margin-right: 10px;" />
         <br><br>
         <form id="myForm" enctype="multipart/form-data" class="form-horizontal">
             <fieldset>
@@ -52,8 +52,9 @@
     </div>
     <!-- Button (Double) -->
     <div class="form-group">
-        <div class="col-sm-6 col-sm-offset-5">
-            <input onclick="addUserInfo()" type="button" id="btnSave" name="btnSave" class="btn btn-primary btn-sm center-block" value="Save" />
+        <div class="col-sm-6 col-sm-offset-4">
+            <input onclick="addUserInfo()" type="button" id="btnSave" name="btnSave" class="btn btn-primary btn-sm center-block" value="Save"/>
+           
         </div>
     </div>
     @Html.HiddenFor(a => a.Id)
@@ -82,6 +83,9 @@
                 }
             }
         });
+    }
+    function Close() {
+        $("#divparent1").hide();
     }
 </script>
 <style>

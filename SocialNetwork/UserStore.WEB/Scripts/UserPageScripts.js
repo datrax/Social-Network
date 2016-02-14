@@ -26,28 +26,32 @@
 }, true);
 $(function () {
     $('#modalWindow').click(function () {
+        if ($('#divparent1').children().length > 0) {
+            $("#divparent1").show();
+            return false;
+        } else {
+            $('<div/>').dialog({
+                position: { my: "center", at: "top+180", of: window },
+                title: "Edit",
+                appendTo: "#divparent1",
+                closeText: "x",
+                resizable: false,
+                modal: true,
+                autoResize: true,
+                maxWidth: 600,
+                close: function(event, ui) {
+                    dialog.remove();
 
-        $('<div/>').appendTo('body').dialog({
-            position: { my: "center", at: "top+180", of: window },
-            title: "Edit",
-            
-            closeText: "x",
-            resizable: false,
-            modal: true,         
-            autoResize: true,
-            maxWidth: 600,
-            close: function (event, ui) {
-                dialog.remove();
 
+                },
+                open: function(event, ui) {
+                    //hide close button.
+                    $(this).parent().children().children('.ui-dialog-titlebar-close').hide();
+                },
+            }).load(this.href, {});
 
-            },
-            open: function (event, ui) {
-                //hide close button.
-                $(this).parent().children().children('.ui-dialog-titlebar-close').hide();
-            },
-        }).load(this.href, {});
-
-        return false;
+            return false;
+        }
     });
 });
 
