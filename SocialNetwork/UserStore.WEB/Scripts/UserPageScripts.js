@@ -26,6 +26,7 @@
 }, true);
 $(function () {
     $('#modalWindow').click(function () {
+
         $('<div/>').appendTo('body').dialog({
             position: { my: "center", at: "top+180", of: window },
             title: "Edit",
@@ -39,7 +40,10 @@ $(function () {
 
 
             },
-
+            open: function (event, ui) {
+                //hide close button.
+                $(this).parent().children().children('.ui-dialog-titlebar-close').hide();
+            },
             modal: true
         }).load(this.href, {});
 
