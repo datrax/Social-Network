@@ -1,11 +1,11 @@
 ﻿@model UserStore.Models.UserModel
-<div style="background-color: rgba(255, 255, 255, 0.1);">
+<div style="background-color: rgba(255, 255, 255, 0.1); max-width: 550px; margin-left: 20px;">
 
    
         <br><br>
         <form id="myForm" enctype="multipart/form-data" class="form-horizontal">
             <fieldset>
-                <div style="margin-left: -40px; margin-top: 20px;">
+                <div >
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div id="showErrorMessage" class="text-danger"></div>
 
@@ -40,12 +40,12 @@
 
 
     <div class="form-group">
-        <div class="full-width">
+        <div class="full-width"style="margin-left: 22px;">
 
             <label class="col-md-4 control-label" style="margin-top: 15px;">Avatar</label>
             <div class="col-md-8">
-                <input type="file" id="base-input" class="form-control form-input form-style-base image-preview2" name="uploadImage">
-                <input type="text" id="fake-input" class="form-control form-input form-style-fake" placeholder="Choose photo" readonly>
+                <input type="file" id="base-input" class="form-control form-control2 form-input form-style-base image-preview2" name="uploadImage">
+                <input type="text" id="fake-input" class="form-control form-control2 form-input form-style-fake" placeholder="Pick photo" readonly>
                 <span class="glyphicon glyphicon-open input-place"></span>
             </div>
         </div>
@@ -87,7 +87,7 @@
 <style>
     .full-width {
         float: left;
-        width: 91%;
+        width: 80%;
         margin-top: -10px;
           margin-left: -10px;
         min-height: 100px;
@@ -107,8 +107,8 @@
         opacity: 0;
     }
 
-    .form-control {
-        padding: 10px 50px;
+    .form-control2 {
+        padding: 10px 30px;
     }
 
     .form-input {

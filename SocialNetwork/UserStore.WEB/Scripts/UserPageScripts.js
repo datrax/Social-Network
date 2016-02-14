@@ -30,11 +30,12 @@ $(function () {
         $('<div/>').appendTo('body').dialog({
             position: { my: "center", at: "top+180", of: window },
             title: "Edit",
-            width: 500,
-            maxWidth: 500,
-            resizable: false,
+            
             closeText: "x",
-
+            resizable: false,
+            modal: true,         
+            autoResize: true,
+            maxWidth: 600,
             close: function (event, ui) {
                 dialog.remove();
 
@@ -44,7 +45,6 @@ $(function () {
                 //hide close button.
                 $(this).parent().children().children('.ui-dialog-titlebar-close').hide();
             },
-            modal: true
         }).load(this.href, {});
 
         return false;
