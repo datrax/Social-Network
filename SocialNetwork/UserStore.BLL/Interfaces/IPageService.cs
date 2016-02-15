@@ -13,10 +13,10 @@ namespace UserStore.BLL.Interfaces
         UserDTO GetUserByLogin(string login);
         AvatarDTO GetAvatar(string login);
         bool SetAvatar(AvatarDTO avatar);
-        bool ChangeUserInfo(UserDTO user);
+        string ChangeUserInfo(UserDTO user);
         IEnumerable<UserDTO> FindUsers(string input);
         IEnumerable<PostDTO> GetPosts(string authorizeId, string urlId);
-        bool DeletePost(int postId);
+        bool DeletePost(int postId,string postWallOwnerId);
         bool AddPost(string authorizeId, string urlId, string text, byte[] image);
         bool LikePost(string authorizeId, int postId);
         IEnumerable<UserDTO> GetLikeUserList(int postId);

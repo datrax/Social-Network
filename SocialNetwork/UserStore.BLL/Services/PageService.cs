@@ -73,13 +73,24 @@ namespace UserStore.BLL.Services
             }
         }
 
-        public bool ChangeUserInfo(UserDTO user)
+        public string ChangeUserInfo(UserDTO user)
         {
+            if (string.IsNullOrEmpty(user.Name))
+                return "Please enter name";
+
+            if (string.IsNullOrEmpty(user.Surname))
+                return "Please enter surname";
+            if (GetUserByLogin(user.Login) != null && GetUserByLogin(user.Login).Id != user.Id)
+                return "This URL is busy";
+            if (!(user.Login.All(c => Char.IsLetterOrDigit(c) || c == '_') && user.Login.Any(char.IsLetter)))
+                return "URL can contain only letters, numbers and '_' and must have at least one letter!";
+
+
             var config = new MapperConfiguration(cfg => cfg.CreateMap<UserDTO, ClientProfile>());
             var mapper = config.CreateMapper();
             Database.Users.Update(mapper.Map<ClientProfile>(user));
             Database.Save();
-            return true;
+            return null;
         }
 
         public IEnumerable<UserDTO> FindUsers(string input)
@@ -102,10 +113,8 @@ namespace UserStore.BLL.Services
             if (name == "")
             {
                 return
-                           mapper.Map<List<UserDTO>>(
+                   mapper.Map<List<UserDTO>>(
                                Database.Users.Find(a => a.Surname.ToLower().Contains(surname.ToLower())));
-
-
             }
             else
             {
@@ -145,15 +154,19 @@ namespace UserStore.BLL.Services
             }
             return wallPosts.OrderByDescending(a => a.DateTime);
         }
-        public bool AddPost(string authorizeId, string urlId, string text,byte[] image)
+        public bool AddPost(string authorizeId, string urlId, string text, byte[] image)
         {
+            if (image == null && string.IsNullOrEmpty(text))
+            {
+                return false;
+            }
             Post post = new Post()
             {
                 DateTime = DateTime.Now,
                 Text = text,
                 UserFromId = authorizeId,
                 UserToId = urlId,
-                HasPhoto= image != null
+                HasPhoto = image != null
             };
             Database.Posts.Create(post);
             if (image != null)
@@ -170,32 +183,35 @@ namespace UserStore.BLL.Services
             Database.Save();
             return true;
         }
-        public bool DeletePost(int postId)
+        public bool DeletePost(int postId, string postWallOwnerId)
         {
             var post = Database.Posts.Get(postId);
+            if (post.UserFromId != postWallOwnerId && post.UserToId != postWallOwnerId)
+            {
+                return false;
+            }
             var t = post.LikesUserPost.ToList();
             foreach (var like in t)
             {
                 Database.Likes.Delete(like.Id);
             }
-            var photos = Database.Avatars.Find(a => a.UserId ==  post.Id.ToString());
+            var photos = Database.Avatars.Find(a => a.UserId == post.Id.ToString());
             foreach (var photo in photos)
             {
                 Database.Avatars.Delete(Int32.Parse(photo.UserId));
             }
-           
-          
+
+
             Database.Posts.Delete(postId);
-     
+
             Database.Save();
             return true;
         }
         public bool LikePost(string authorizeId, int postId)
         {
-            var user = Database.Users.Find(a => a.Id == authorizeId).First();
             var post = Database.Posts.Get(postId);
-            var t=post.LikesUserPost.Where(a => a.ClientProfileId == authorizeId).ToList();
-            
+            var t = post.LikesUserPost.Where(a => a.ClientProfileId == authorizeId).ToList();
+
             if (t.Count == 0)
             {
                 post.LikesUserPost.Add(new LikesUserPost()
@@ -203,7 +219,6 @@ namespace UserStore.BLL.Services
                     PostId = postId,
                     ClientProfileId = authorizeId
                 });
-                
             }
             else
             {
@@ -219,7 +234,7 @@ namespace UserStore.BLL.Services
             var post = Database.Posts.Get(postId);
             foreach (var t in post.LikesUserPost)
             {
-               users.Add(t.ClientProfile);
+                users.Add(t.ClientProfile);
             }
             var config = new MapperConfiguration(cfg => cfg.CreateMap<ClientProfile, UserDTO>());
             var mapper = config.CreateMapper();

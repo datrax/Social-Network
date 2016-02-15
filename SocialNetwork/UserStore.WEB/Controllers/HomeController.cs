@@ -49,12 +49,17 @@ namespace UserStore.Controllers
         [Authorize]
         public ActionResult UserPage(string id)
         {
+            //case when there's cookie but db is just created
+            if (pageService.GetUserByLogin(id) == null)
+            {
+                return RedirectToAction("Logout", "Account");
+            }
             var config = new MapperConfiguration(cfg => cfg.CreateMap<UserDTO, UserModel>());
             var mapper = config.CreateMapper();
-            var t = pageService.GetUserByLogin(id);
-            if (t == null)
+            var user = pageService.GetUserByLogin(id);
+            if (user == null)
                 return View("Error");
-            return View(mapper.Map<UserModel>(t));
+            return View(mapper.Map<UserModel>(user));
         }
 
 
@@ -68,32 +73,19 @@ namespace UserStore.Controllers
             return File(buffer, "image/jpg", string.Format("{0}.jpg", id));
         }
         [Authorize]
-        public string GetImageName(string id)
-        {
-            var item = pageService.GetAvatar(id);
-            if (item == null)
-                return null;
-            return "/Home/ViewImage/" + id;
-        }
-        [Authorize]
         [HttpPost]
         public ActionResult UploadImages(HttpPostedFileBase uploadImage, UserModel model)
         {
-            if (string.IsNullOrEmpty(model.Name ) )
-                return Json(new { result = false, responseText = "Please enter name" });
-
-            if (string.IsNullOrEmpty(model.Surname))
-                return Json(new { result = false, responseText = "Please enter surname" });
-            if(pageService.GetUserByLogin(model.Login)!=null&& pageService.GetUserByLogin(model.Login).Id!=model.Id)
-                return Json(new { result = false, responseText = "This URL is busy" });
-            if(!(model.Login.All(c => Char.IsLetterOrDigit(c) || c == '_')&& model.Login.Any(char.IsLetter)))
-                return Json(new { result = false, responseText = "URL can contain only letters, numbers and '_' and must have at least one letter!" });
+           
             var config = new MapperConfiguration(cfg => cfg.CreateMap<UserModel, UserDTO>());
             var mapper = config.CreateMapper();
-            var t = mapper.Map<UserDTO>(model);
-            t.Id = User.Identity.GetUserId();
-            pageService.ChangeUserInfo(t);
-
+            var user = mapper.Map<UserDTO>(model);
+            user.Id = User.Identity.GetUserId();
+            var result=pageService.ChangeUserInfo(user);
+            if (result != null)
+            {
+                return Json(new { result = false, responseText = result });
+            }
             if (uploadImage != null)
             {
                 byte[] imageData = null;
@@ -106,10 +98,12 @@ namespace UserStore.Controllers
                     Avatar = imageData,
                     UserId = model.Id
                 };
-                pageService.SetAvatar(headerImage);
+                var res=pageService.SetAvatar(headerImage);
+                if (!res)
+                {
+                    return Json(new { result = false, responseText = "Internal server error. Cannot set a photo." });
+                }
             }
-
-            // return RedirectToAction("Error");
             return Json(new { result = "Redirect", url = "/" + model.Login});
         }
         [Authorize]
@@ -117,10 +111,10 @@ namespace UserStore.Controllers
         public ActionResult EditModel()
         {
             string id = User.Identity.GetUserId();
-            var t = pageService.GetUserByID(id);
+            var user = pageService.GetUserByID(id);
             var config = new MapperConfiguration(cfg => cfg.CreateMap<UserDTO, UserModel>());
             var mapper = config.CreateMapper();
-            return PartialView(mapper.Map<UserModel>(t));
+            return PartialView(mapper.Map<UserModel>(user));
         }
         [Authorize]
         [HttpPost]
@@ -129,12 +123,6 @@ namespace UserStore.Controllers
             var config = new MapperConfiguration(cfg => cfg.CreateMap<UserDTO, UserModel>());
             var mapper = config.CreateMapper();
             return PartialView("SearchUsers", mapper.Map<IEnumerable<UserModel>>(pageService.FindUsers(searchField)));
-        }
-        [Authorize]
-        [HttpPost]
-        public ActionResult SearchUsers()
-        {
-            return new EmptyResult();
         }
         [Authorize]
         [HttpPost]
@@ -148,10 +136,9 @@ namespace UserStore.Controllers
         [HttpPost]
         public ActionResult DeletePost(string id)
         {
-            var postId = pageService.GetPostWallOwnerById(Int32.Parse(id));
-            pageService.DeletePost(Int32.Parse(id));
-
-            return Wall(postId);
+            var postWallOwnerId = pageService.GetPostWallOwnerById(Int32.Parse(id));
+            pageService.DeletePost(Int32.Parse(id), User.Identity.GetUserId());
+            return Wall(postWallOwnerId);
         }
         [Authorize]
         [HttpPost]
@@ -172,7 +159,7 @@ namespace UserStore.Controllers
         [Authorize]
         [HttpPost]
         public ActionResult LikePost(string id)
-        {
+        {            
             pageService.LikePost(User.Identity.GetUserId(), Int32.Parse(id));            
             return Wall(pageService.GetPostWallOwnerById(Int32.Parse(id)));
         }

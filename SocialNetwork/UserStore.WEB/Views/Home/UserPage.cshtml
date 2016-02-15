@@ -20,6 +20,7 @@
                 </div>
                 <div style="margin-top: -10px;float: left">
                     <h1>@Model.Name @Model.Surname</h1>
+                    @Html.ActionLink("My page", "Index")<br>
                     @Html.ActionLink("Edit profile", "EditModel", null, new { id = "modalWindow" })<br>
                     @Html.ActionLink("Logout", "Logout", "Account", null, new { style = " float: Left;" })
                 </div>
