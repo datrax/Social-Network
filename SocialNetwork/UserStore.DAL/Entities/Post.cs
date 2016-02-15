@@ -17,7 +17,6 @@ namespace UserStore.DAL.Entities
 
         public int Id { get; set; }
 
-        [Required]
         public string Text { get; set; }
         [Required]
         public bool HasPhoto { get; set; }

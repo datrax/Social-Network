@@ -38,10 +38,13 @@ namespace UserStore.Controllers
         public ActionResult Index()
         {
             string id = User.Identity.GetUserId();
-            var t = pageService.GetUserByID(id).Login;
-            if (t == null)
-                return View("Error");
-            return Redirect("/" + t);
+            //case when there's cookie but db is just created
+            if (pageService.GetUserByID(id) == null)
+            {
+                return RedirectToAction("Logout", "Account");
+            }
+            var login = pageService.GetUserByID(id).Login;
+            return Redirect("/" + login);
         }
         [Authorize]
         public ActionResult UserPage(string id)

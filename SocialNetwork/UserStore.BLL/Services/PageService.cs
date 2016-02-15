@@ -25,7 +25,7 @@ namespace UserStore.BLL.Services
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<ClientProfile, UserDTO>());
             var mapper = config.CreateMapper();
-            return mapper.Map<UserDTO>(Database.Users.Find(a => a.Id == id).First());
+            return mapper.Map<UserDTO>(Database.Users.Find(a => a.Id == id).FirstOrDefault());
         }
 
         public UserDTO GetUserByLogin(string login)
