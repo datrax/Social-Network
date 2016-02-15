@@ -49,7 +49,7 @@ namespace UserStore.Controllers
                 ClaimsIdentity claim = await UserService.Authenticate(userDto);
                 if (claim == null)
                 {
-                    ModelState.AddModelError("", "Неверный логин или пароль.");
+                    ModelState.AddModelError("", "Wrong login or password.");
                 }
                 else
                 {
@@ -127,11 +127,11 @@ namespace UserStore.Controllers
             {
                 Email = "somemail@mail.ru",
                 UserName = "somemail@mail.ru",
-                Password = "ad46D_ewr3",
-                Name = "Семен Семенович Горбунков",
-                Surname = "ул. Спортивная, д.30, кв.75",
-                Role = "admin",
-            }, new List<string> { "user", "admin" });
+                Password = "123456",
+                Name = "Ivan",
+                Surname = "Ivanov",
+                Role = "user",
+            }, new List<string> { "user" });
         }
     }
 }

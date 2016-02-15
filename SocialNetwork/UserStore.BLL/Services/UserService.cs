@@ -16,6 +16,7 @@ namespace UserStore.BLL.Services
     {
         IUnitOfWork Database { get; set; }
 
+
         public UserService(IUnitOfWork uow)
         {
             Database = uow;
@@ -33,15 +34,15 @@ namespace UserStore.BLL.Services
                 // добавляем роль
                 await Database.UserManager.AddToRoleAsync(user.Id, userDto.Role);
                 // создаем профиль клиента
-                ClientProfile clientProfile = new ClientProfile { Id = user.Id, Surname = userDto.Surname, Name = userDto.Name ,Login=userDto.Login};
+                ClientProfile clientProfile = new ClientProfile { Id = user.Id, Surname = userDto.Surname, Name = userDto.Name ,Login="id"+Database.UserManager.Users.Count()};
                 Database.ClientManager.Create(clientProfile);
                 await Database.SaveAsync();
-                return new OperationDetails(true, "Регистрация успешно пройдена", "");
+                return new OperationDetails(true, "Register successful", "");
 
             }
             else
             {
-                return new OperationDetails(false, "Пользователь с таким логином уже существует", "Email");
+                return new OperationDetails(false, "User with same email already exists", "Email");
             }
         }
 
