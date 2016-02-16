@@ -1,0 +1,50 @@
+﻿
+        .full-width {
+        float: left;
+        width: 80%;
+        margin-top: 10px;
+          margin-left: -10px;
+        min-height: 100px;
+        position: relative;
+
+    }
+        .full-width2 {
+        float: left;
+        width: 80%;
+        margin-top: 00px;
+          margin-left: -10px;
+        min-height: 50px;
+        position: relative;
+
+    }
+    .form-style-fake {
+        position: absolute;
+        top: 0px;
+    }
+
+    .form-style-base {
+        position: absolute;
+        top: 0px;
+        z-index: 999;
+        opacity: 0;
+    }
+
+    .form-control2 {
+        padding: 10px 30px;
+    }
+
+    .form-input {
+        height: 30px;
+        border-radius: 0px;
+        margin-top: 20px;
+
+    }
+
+    .input-place {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        font-size: 23px;
+        color: gray;
+    }
+
