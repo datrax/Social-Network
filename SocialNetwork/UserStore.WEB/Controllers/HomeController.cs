@@ -74,7 +74,7 @@ namespace UserStore.Controllers
         }
         [Authorize]
         [HttpPost]
-        public ActionResult UploadImages(HttpPostedFileBase uploadImage, UserModel model)
+        public ActionResult UploadImages(HttpPostedFileBase uploadImage,HttpPostedFileBase themeImage, UserModel model)
         {
            
             var config = new MapperConfiguration(cfg => cfg.CreateMap<UserModel, UserDTO>());
@@ -100,6 +100,25 @@ namespace UserStore.Controllers
                 };
                 var res=pageService.SetAvatar(headerImage);
                 if (!res)
+                {
+                    return Json(new { result = false, responseText = "Internal server error. Cannot set a photo." });
+                }
+
+            }
+            if (themeImage != null)
+            {
+                byte[] imageData2 = null;
+                using (var binaryReader = new BinaryReader(themeImage.InputStream))
+                {
+                    imageData2 = binaryReader.ReadBytes(themeImage.ContentLength);
+                }
+                var headerImage2 = new AvatarDTO()
+                {
+                    Avatar = imageData2,
+                    UserId = model.Id + "!Background"
+                };
+                var res2 = pageService.SetAvatar(headerImage2);
+                if (!res2)
                 {
                     return Json(new { result = false, responseText = "Internal server error. Cannot set a photo." });
                 }

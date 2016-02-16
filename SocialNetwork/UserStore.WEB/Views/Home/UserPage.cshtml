@@ -1,4 +1,5 @@
-﻿@model UserStore.Models.UserModel
+﻿@using Microsoft.AspNet.Identity
+@model UserStore.Models.UserModel
 
 @{
     ViewBag.Title = Model.Name + " " + Model.Surname;
@@ -13,7 +14,7 @@
 <div class="container">
     <div class="fb-profile">
         <div class="row">
-            <img align="left" class="fb-image-lg" src="http://lorempixel.com/850/280/nightlife/5/" alt="Profile image example" />
+            <img align="left" class="fb-image-lg" src="/Home/ViewImage/@User.Identity.GetUserId()!Background" onerror="this.src = 'http://marshall.org/wp-content/themes/marshall/img/featured-space-policy.jpg'"/>
             <div class="col-md-8">
                 <div>
                     <img align="left" class="fb-image-profile thumbnail" src="/Home/ViewImage/@Model.Id" onerror="this.src = '/Content/user-default.png'" />
