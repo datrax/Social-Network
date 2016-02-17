@@ -66,6 +66,11 @@ function DeletePost(postId) {
         url: '/Home/DeletePost/',
         data: { id: postId },
         success: function (data) {
+            if (data.result == false) {
+                console.error(data.responseText);
+                return false;
+            }
+
             var div = document.getElementById("wallResult");
             var oldScrollTop = div.scrollTop;
             div.innerHTML = data;
@@ -82,11 +87,18 @@ function LikePost(postId) {
         url: '/Home/LikePost/',
         data: { id: postId },
         success: function (data) {
+
+            if (data.result==false) {
+                console.error(data.responseText);
+                return false;
+            }
+
             var div = document.getElementById("wallResult");
             var oldScrollTop = div.scrollTop;
             div.innerHTML = data;
             div.scrollTop = oldScrollTop;
             return false;
+       
         }
 
     });
@@ -99,7 +111,11 @@ function GetLikes(postId) {
         url: '/Home/GetLikeUsers/',
         data: { id: postId },
         success: function (data) {
-            console.log(postId + "results");
+            if (data.result == false) {
+                console.error(data.responseText);
+                return false;
+            }
+
             var div = document.getElementById(postId + "results");
             var oldScrollTop = div.scrollTop;
             div.innerHTML = data;

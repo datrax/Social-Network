@@ -155,9 +155,9 @@ namespace UserStore.BLL.Services
             }
             catch (Exception)
             {
-                return null;
+                return new List<UserDTO>();
             }
-           
+
         }
 
         public IEnumerable<PostDTO> GetPosts(string authorizeId, string urlId)
@@ -188,9 +188,9 @@ namespace UserStore.BLL.Services
             catch (Exception)
             {
 
-                return null;
+                return new List<PostDTO>();
             }
-   
+
         }
         public bool AddPost(string authorizeId, string urlId, string text, byte[] image)
         {
@@ -317,7 +317,7 @@ namespace UserStore.BLL.Services
             {
                 return null;
             }
-           
+
         }
     }
 }

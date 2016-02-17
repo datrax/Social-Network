@@ -74,14 +74,14 @@ namespace UserStore.Controllers
         }
         [Authorize]
         [HttpPost]
-        public ActionResult UploadImages(HttpPostedFileBase uploadImage,HttpPostedFileBase themeImage, UserModel model)
+        public ActionResult UploadImages(HttpPostedFileBase uploadImage, HttpPostedFileBase themeImage, UserModel model)
         {
-           
+
             var config = new MapperConfiguration(cfg => cfg.CreateMap<UserModel, UserDTO>());
             var mapper = config.CreateMapper();
             var user = mapper.Map<UserDTO>(model);
             user.Id = User.Identity.GetUserId();
-            var result=pageService.ChangeUserInfo(user);
+            var result = pageService.ChangeUserInfo(user);
             if (result != null)
             {
                 return Json(new { result = false, responseText = result });
@@ -98,7 +98,7 @@ namespace UserStore.Controllers
                     Avatar = imageData,
                     UserId = model.Id
                 };
-                var res=pageService.SetAvatar(headerImage);
+                var res = pageService.SetAvatar(headerImage);
                 if (!res)
                 {
                     return Json(new { result = false, responseText = "Internal server error. Cannot set a photo." });
@@ -123,7 +123,7 @@ namespace UserStore.Controllers
                     return Json(new { result = false, responseText = "Internal server error. Cannot set a photo." });
                 }
             }
-            return Json(new { result = "Redirect", url = "/" + model.Login});
+            return Json(new { result = "Redirect", url = "/" + model.Login });
         }
         [Authorize]
         [HttpPost]
@@ -148,20 +148,34 @@ namespace UserStore.Controllers
         public ActionResult Wall(string id)
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<PostDTO, PostModel>());
-            var mapper = config.CreateMapper();            
-            return PartialView("Wall",mapper.Map<IEnumerable<PostModel>>(pageService.GetPosts(User.Identity.GetUserId(), id)));
+            var mapper = config.CreateMapper();
+            return PartialView("Wall", mapper.Map<IEnumerable<PostModel>>(pageService.GetPosts(User.Identity.GetUserId(), id)));
         }
         [Authorize]
         [HttpPost]
         public ActionResult DeletePost(string id)
         {
+            int t;
+            if (!int.TryParse(id, out t))
+            {
+                return Json(new { result = false, responseText = "In LikePost. Post not found" });
+            }
+            var postowner = pageService.GetPostWallOwnerById(t);
+            if (postowner == null)
+            {
+                return Json(new { result = false, responseText = "In LikePost. Post not found" });
+            }
             var postWallOwnerId = pageService.GetPostWallOwnerById(Int32.Parse(id));
-            pageService.DeletePost(Int32.Parse(id), User.Identity.GetUserId());
+            if (!pageService.DeletePost(Int32.Parse(id), User.Identity.GetUserId()))
+            {
+                return Json(new { result = false, responseText = "In DeletePost. Internal error" });
+            }
             return Wall(postWallOwnerId);
         }
+
         [Authorize]
         [HttpPost]
-        public ActionResult AddPost(string id,string postField, HttpPostedFileBase uploadImage)
+        public ActionResult AddPost(string id, string postField, HttpPostedFileBase uploadImage)
         {
             byte[] imageData = null;
             if (uploadImage != null)
@@ -172,23 +186,44 @@ namespace UserStore.Controllers
                     imageData = binaryReader.ReadBytes(uploadImage.ContentLength);
                 }
             }
-            pageService.AddPost(User.Identity.GetUserId(), id, postField, imageData);                   
+            pageService.AddPost(User.Identity.GetUserId(), id, postField, imageData);               
             return Wall(id);
         }
         [Authorize]
         [HttpPost]
         public ActionResult LikePost(string id)
-        {            
-            pageService.LikePost(User.Identity.GetUserId(), Int32.Parse(id));            
-            return Wall(pageService.GetPostWallOwnerById(Int32.Parse(id)));
+        {
+            int t;
+            if (!int.TryParse(id, out t))
+            {
+                return Json(new { result = false, responseText = "In LikePost. Post not found" });
+            }
+            var postowner = pageService.GetPostWallOwnerById(t);
+            if (postowner == null)
+            {
+                return Json(new { result = false, responseText = "In LikePost. Post not found" });
+            }
+            pageService.LikePost(User.Identity.GetUserId(), t);
+            return Wall(postowner);
+            // 
         }
         [Authorize]
         [HttpPost]
         public ActionResult GetLikeUsers(string id)
-        {           
+        {
+            int t;
+            if (!int.TryParse(id, out t))
+            {
+                return Json(new { result = false, responseText = "In LikePost. Post not found" });
+            }
+            var postowner = pageService.GetPostWallOwnerById(t);
+            if (postowner == null)
+            {
+                return Json(new { result = false, responseText = "In LikePost. Post not found" });
+            }
             var config = new MapperConfiguration(cfg => cfg.CreateMap<UserDTO, UserModel>());
             var mapper = config.CreateMapper();
-            return PartialView("SearchUsers", mapper.Map<IEnumerable<UserModel>>(pageService.GetLikeUserList(Int32.Parse(id))));
+            return PartialView("SearchUsers", mapper.Map<IEnumerable<UserModel>>(pageService.GetLikeUserList(t)));
         }
 
     }
