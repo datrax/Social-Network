@@ -8,7 +8,6 @@ using UserStore.BLL.DTO;
 using UserStore.BLL.Interfaces;
 using UserStore.DAL.Entities;
 using UserStore.DAL.Interfaces;
-using UserStore.DAL.Repositories;
 
 namespace UserStore.BLL.Services
 {
@@ -16,9 +15,9 @@ namespace UserStore.BLL.Services
     {
         private IEFUnitOfWork Database { get; set; }
 
-        public PageService()
+        public PageService(IEFUnitOfWork database)
         {
-            Database = new EFUnitOfWork();
+            Database = database;
         }
 
         public UserDTO GetUserByID(string id)

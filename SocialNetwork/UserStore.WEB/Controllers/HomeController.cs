@@ -18,9 +18,9 @@ namespace UserStore.Controllers
     public class HomeController : Controller
     {
         private IPageService pageService;
-        public HomeController()
+        public HomeController(IPageService pageService)
         {
-            pageService = new PageService();
+            this.pageService = pageService;
         }
         private IUserService UserService
         {
