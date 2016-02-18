@@ -14,7 +14,7 @@
 <div class="container">
     <div class="fb-profile">
         <div class="row">
-            <img align="left" class="fb-image-lg" src="/Home/ViewImage/@User.Identity.GetUserId()!Background" onerror="this.src = 'http://marshall.org/wp-content/themes/marshall/img/featured-space-policy.jpg'" />
+            <img align="left" class="fb-image-lg" src="/Home/ViewImage/@Model.Id!Background" onerror="this.src = 'http://marshall.org/wp-content/themes/marshall/img/featured-space-policy.jpg'" />
             <div class="col-md-8">
                 <div>
                     <img align="left" class="fb-image-profile thumbnail" src="/Home/ViewImage/@Model.Id" onerror="this.src = '/Content/user-default.png'" />
@@ -29,10 +29,10 @@
             <div class="search" style="float: right">
                 @using (Ajax.BeginForm("Search", "Home", new AjaxOptions { UpdateTargetId = "results" }))
                 {
-                    <input type="text" class="form-control input-sm" maxlength="64" placeholder="Search" name="searchField" id="searchField" />
+                    <input type="text" class="form-control input-sm" maxlength="64" placeholder="Search" name="searchField" id="searchField" autocomplete="off" />
                     <button type="submit" class="btn btn3 btn-primary btn-sm" id="SubmitBtn">Search</button>
                 }
-                <div id="results" style=" z-index: 1000; position: absolute; margin-top: 50px; background-color: rgba(0, 120, 201, 0.1);width: 300px;"></div>
+                <div id="results" style=" z-index: 1000; position: absolute; margin-top: 50px; background-color: rgba(0, 120, 201, 0.1);width: 330px;"></div>
             </div>
         </div>
     </div>

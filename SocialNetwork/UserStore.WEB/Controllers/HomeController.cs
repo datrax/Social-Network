@@ -50,7 +50,9 @@ namespace UserStore.Controllers
         public ActionResult UserPage(string id)
         {
             //case when there's cookie but db is just created
-            if (pageService.GetUserByLogin(id) == null)
+            string idid = User.Identity.GetUserId();
+            //case when there's cookie but db is just created
+            if (pageService.GetUserByID(idid) == null)
             {
                 return RedirectToAction("Logout", "Account");
             }
@@ -165,12 +167,11 @@ namespace UserStore.Controllers
             {
                 return Json(new { result = false, responseText = "In LikePost. Post not found" });
             }
-            var postWallOwnerId = pageService.GetPostWallOwnerById(Int32.Parse(id));
             if (!pageService.DeletePost(Int32.Parse(id), User.Identity.GetUserId()))
             {
                 return Json(new { result = false, responseText = "In DeletePost. Internal error" });
             }
-            return Wall(postWallOwnerId);
+            return Wall(postowner);
         }
 
         [Authorize]
@@ -204,6 +205,7 @@ namespace UserStore.Controllers
                 return Json(new { result = false, responseText = "In LikePost. Post not found" });
             }
             pageService.LikePost(User.Identity.GetUserId(), t);
+            
             return Wall(postowner);
             // 
         }

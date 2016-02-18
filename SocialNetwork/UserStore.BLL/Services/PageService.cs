@@ -302,7 +302,7 @@ namespace UserStore.BLL.Services
             }
             catch
             {
-                return null;
+                return new List<UserDTO>();
             }
         }
 

@@ -68,6 +68,7 @@ function DeletePost(postId) {
         success: function (data) {
             if (data.result == false) {
                 console.error(data.responseText);
+                myTimer();
                 return false;
             }
 
@@ -90,6 +91,7 @@ function LikePost(postId) {
 
             if (data.result == false) {
                 console.error(data.responseText);
+                myTimer();
                 return false;
             }
 
@@ -113,6 +115,7 @@ function GetLikes(postId) {
         success: function (data) {
             if (data.result == false) {
                 console.error(data.responseText);
+                myTimer();
                 return false;
             }
 
