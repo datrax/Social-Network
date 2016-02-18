@@ -39,12 +39,12 @@ $(function () {
                 modal: true,
                 autoResize: true,
                 maxWidth: 600,
-                close: function(event, ui) {
+                close: function (event, ui) {
                     dialog.remove();
 
 
                 },
-                open: function(event, ui) {
+                open: function (event, ui) {
                     //hide close button.
                     $(this).parent().children().children('.ui-dialog-titlebar-close').hide();
                 },
@@ -88,7 +88,7 @@ function LikePost(postId) {
         data: { id: postId },
         success: function (data) {
 
-            if (data.result==false) {
+            if (data.result == false) {
                 console.error(data.responseText);
                 return false;
             }
@@ -98,7 +98,7 @@ function LikePost(postId) {
             div.innerHTML = data;
             div.scrollTop = oldScrollTop;
             return false;
-       
+
         }
 
     });
@@ -192,4 +192,24 @@ $(function () {
         }
         reader.readAsDataURL(file);
     });
+});
+$('#backSc').click(function (e) {
+
+    var div = document.getElementById("searchField");
+
+    div.value = "";
+
+    $("#SubmitBtn").submit();
+    var pWidth = $(this).innerWidth(); //use .outerWidth() if you want borders
+    var pOffset = $(this).offset();
+    var x = e.pageX - pOffset.left;
+
+    myTimer();
+    clearInterval(timer);
+    timer = setInterval(myTimer, 5000);
+    var div = document.getElementById("backSc");
+    if (pWidth / 4 > x&&pWidth>900) {
+        div.scrollTop = 0;
+    }
+
 });
