@@ -3,15 +3,20 @@
 @{
     ViewBag.Title = "Регистрация";
 }
-<link href="~/Content/LoginRegisterStyle.css" rel="stylesheet" />
-<div class="container">
-    <div class="row">
+<link href="~/Content/LoginRegisterStyle.css" rel="stylesheet"/>
+<style>
+.vcenter {
+ 
+}
+    </style>
+<div class="container" style=" margin-top: 10%">
+    <div class="row ">
         <div class="col-md-6 col-md-offset-3">
             <div class="panel panel-login">
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-6">
-                            @Html.ActionLink("Login", "Login", null, new { id = "id-form-link" })
+                            @Html.ActionLink("Login", "Login", null, new {id = "id-form-link"})
                         </div>
                         <div class="col-xs-6">
                             <a href="#" class="active" id="register-form-link">Register</a>
@@ -28,32 +33,32 @@
                                 @Html.AntiForgeryToken()
 
 
-                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.ValidationSummary(true, "", new {@class = "text-danger"})
 
                                 <div class="form-group text-center">
-                                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", tabindex = "1", placeholder = "Name", style = "margin:auto" } })
-                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                    @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "form-control", tabindex = "1", placeholder = "Name", style = "margin:auto"}})
+                                    @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
                                 </div>
                                 <div class="form-group text-center">
-                                    @Html.EditorFor(model => model.Surname, new { htmlAttributes = new { @class = "form-control", tabindex = "1", placeholder = "Surname", style = "margin:auto" } })
-                                    @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
+                                    @Html.EditorFor(model => model.Surname, new {htmlAttributes = new {@class = "form-control", tabindex = "1", placeholder = "Surname", style = "margin:auto"}})
+                                    @Html.ValidationMessageFor(model => model.Surname, "", new {@class = "text-danger"})
                                 </div>
                                 <div class="form-group text-center">
                                     @Html.EditorFor(model => model.Email, new {htmlAttributes = new {@class = "form-control", tabindex = "1", placeholder = "Email", style = "margin:auto"}})
                                     @Html.ValidationMessageFor(model => model.Email, "", new {@class = "text-danger"})
                                 </div>
                                 <div class="form-group text-center">
-                                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", tabindex = "2", placeholder = "Password", style = "margin:auto" } })
-                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                    @Html.EditorFor(model => model.Password, new {htmlAttributes = new {@class = "form-control", tabindex = "2", placeholder = "Password", style = "margin:auto"}})
+                                    @Html.ValidationMessageFor(model => model.Password, "", new {@class = "text-danger"})
                                 </div>
                                 <div class="form-group text-center">
-                                    @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", tabindex = "2", placeholder = "Confirm Password", style = "margin:auto" } })
-                                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                                    @Html.EditorFor(model => model.ConfirmPassword, new {htmlAttributes = new {@class = "form-control", tabindex = "2", placeholder = "Confirm Password", style = "margin:auto"}})
+                                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new {@class = "text-danger"})
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-6 col-sm-offset-3">
-                                            <input type="submit" value="Регистрация" class="form-control btn btn-register" />
+                                            <input type="submit" value="Register" class="form-control btn btn-register"/>
                                         </div>
                                     </div>
                                 </div>
