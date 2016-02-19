@@ -55,6 +55,14 @@ $(function () {
         var reader = new FileReader();
         // Set preview image into the popover data-content
         reader.onload = function (e) {
+            if (!isImage(file.name)) {
+                $('.image-preview2').attr("data-content", "").popover('hide');
+                $('.image-preview2-filename2').html("");
+                $('.image-preview2-input input:file').val("");
+                $(".image-preview2-input-title2").text("Browse");             
+                sweetAlert("Only images can be attached");
+                return;
+            }
             $(".image-preview2-input-title2").text("Change");
             $(".image-preview2-clear2").show();
             $(".image-preview2-filename2").html(file.name);
@@ -113,6 +121,14 @@ $(function () {
         var reader = new FileReader();
         // Set preview image into the popover data-content
         reader.onload = function (e) {
+            if (!isImage(file.name)) {
+                $('.image-preview3').attr("data-content", "").popover('hide');
+                $('.image-preview3-filename3').html("");
+                $('.image-preview3-input input:file').val("");
+                $(".image-preview3-input-title3").text("Browse");
+                sweetAlert("Only images can be attached");
+                return;
+            }
             $(".image-preview3-input-title3").text("Change");
             $(".image-preview3-clear3").show();
             $(".image-preview3-filename3").html(file.name);

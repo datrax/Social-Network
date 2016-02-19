@@ -184,9 +184,18 @@ $(function () {
             height: 200
         });
         var file = this.files[0];
+        
         var reader = new FileReader();
         // Set preview image into the popover data-content
         reader.onload = function (e) {
+            if (!isImage(file.name)) {
+                document.getElementById("uploadImage").value = "";
+                $('.image-preview-filename').html("");
+                $('.image-preview-input input:file').val("");
+                $('.image-preview').attr("data-content", "").popover('hide');
+                sweetAlert("Only images can be attached");
+                return;
+            }
             $(".image-preview-input-title").text("Change");
             $(".image-preview-clear").show();
             $(".image-preview-filename").html(file.name);

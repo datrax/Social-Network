@@ -97,6 +97,11 @@ namespace UserStore.BLL.Services
                     return "Please enter surname";
                 if (GetUserByLogin(user.Login) != null && GetUserByLogin(user.Login).Id != user.Id)
                     return "This URL is busy";
+                if (user.Login.StartsWith("id")&& user.Login.Substring(2).All(char.IsDigit)&&(GetUserByLogin(user.Login) != null && GetUserByLogin(user.Login).Id != user.Id||
+                  GetUserByLogin(user.Login) == null))
+                {
+                    return "This URL is busy";
+                }
                 if (!(user.Login.All(c => Char.IsLetterOrDigit(c) || c == '_') && user.Login.Any(char.IsLetter)))
                     return "URL can contain only letters, numbers and '_' and must have at least one letter!";
 

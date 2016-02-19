@@ -51,7 +51,7 @@
                         <label for="uploadImage">
                             <a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Picture"><i class="fa fa-picture-o image-preview-filename"></i></a>
                         </label>
-                        <input type="file" name="uploadImage" id="uploadImage">
+                        <input type="file" name="uploadImage" id="uploadImage" accept=".png, .jpg, .jpeg">
                     </div>
                     <button type="submit" class="btn btn-primary image-preview-clear"> Post</button>
                 }
@@ -71,12 +71,13 @@
 <span id="divparent1"></span>
 <script>
     var timer = setInterval(myTimer, 5000);
+
     function myTimer() {
         $.ajax({
             type: "POST",
             url: '/Home/Wall/',
             data: { id: "@Model.Id" },
-            success: function (data) {
+            success: function(data) {
                 var div = document.getElementById("wallResult");
                 var oldScrollTop = div.scrollTop;
                 div.innerHTML = data;
@@ -86,5 +87,22 @@
         });
         return false;
     };
-    myTimer();   
+
+    myTimer();
+    function getExtension(filename) {
+        var parts = filename.split('.');
+        return parts[parts.length - 1];
+    }
+
+    function isImage(filename) {
+        var ext = getExtension(filename);
+        switch (ext.toLowerCase()) {
+            case 'jpg':
+            case 'jpeg':
+            case 'png':
+                return true;
+        }
+        return false;
+    }
+
 </script>

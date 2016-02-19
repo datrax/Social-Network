@@ -51,7 +51,6 @@ namespace UserStore.Controllers
         {
             //case when there's cookie but db is just created
             string idid = User.Identity.GetUserId();
-            //case when there's cookie but db is just created
             if (pageService.GetUserByID(idid) == null)
             {
                 return RedirectToAction("Logout", "Account");
@@ -90,6 +89,14 @@ namespace UserStore.Controllers
             }
             if (uploadImage != null)
             {
+                if (!(uploadImage.ContentType == "image/jpeg" || uploadImage.ContentType == "image/png"))
+                {
+                    return Json(new { result = false, responseText = "Image can be only jpg/png" });
+                }
+                if (uploadImage.ContentLength > 40960*1024)
+                {
+                    return Json(new { result = false, responseText = "Image is bigger than 40Mb" });
+                }
                 byte[] imageData = null;
                 using (var binaryReader = new BinaryReader(uploadImage.InputStream))
                 {
@@ -109,6 +116,14 @@ namespace UserStore.Controllers
             }
             if (themeImage != null)
             {
+                if (!(themeImage.ContentType == "image/jpeg" || themeImage.ContentType == "image/png"))
+                {
+                    return Json(new { result = false, responseText = "Image can be only jpg/png" });
+                }
+                if (themeImage.ContentLength > 40960 * 1024)
+                {
+                    return Json(new { result = false, responseText = "Image is bigger than 40Mb" });
+                }
                 byte[] imageData2 = null;
                 using (var binaryReader = new BinaryReader(themeImage.InputStream))
                 {
@@ -181,12 +196,20 @@ namespace UserStore.Controllers
             byte[] imageData = null;
             if (uploadImage != null)
             {
-
+                if (!(uploadImage.ContentType == "image/jpeg"|| uploadImage.ContentType == "image/png"))
+                {
+                    return Wall(id);
+                }
+                if (uploadImage.ContentLength > 40960 * 1024)
+                {
+                    return Json(new { result = false, responseText = "Image is bigger than 40Mb" });
+                }
                 using (var binaryReader = new BinaryReader(uploadImage.InputStream))
                 {
                     imageData = binaryReader.ReadBytes(uploadImage.ContentLength);
                 }
             }
+    
             pageService.AddPost(User.Identity.GetUserId(), id, postField, imageData);               
             return Wall(id);
         }
